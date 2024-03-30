@@ -4,6 +4,13 @@ import java.util.Date;
 
 import com.startcoding0to1.shopeasybackend.entity.Products;
 
+/**
+ * Data Transfer Object (DTO) for Products.
+ * This class represents the structure of product data that is transferred between the frontend and backend.
+ * It provides getters and setters for accessing and modifying product attributes.
+ * 
+ * @author Mahammad Khairuddin
+ */
 public class ProductsDTO {
 	private String productId;
 	private String productName;
@@ -36,6 +43,16 @@ public class ProductsDTO {
 	private int totalReviews;
 	private char featuredProduct;
 
+	public ProductsDTO(){
+		
+	}
+	
+	/**
+	 * Updates the productsDTO details based on the provided products.
+	 * 
+	 * @param products The Entity containing product information.
+	 * @author Mahammad Khairuddin
+	 */
 	public ProductsDTO(Products products) {
 		this.productId = products.getProductId();
 		this.productName = products.getProductName();

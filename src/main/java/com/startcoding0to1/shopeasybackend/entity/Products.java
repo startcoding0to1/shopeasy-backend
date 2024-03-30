@@ -1,34 +1,38 @@
 package com.startcoding0to1.shopeasybackend.entity;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Objects;
 
-import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import com.startcoding0to1.shopeasybackend.dto.ProductsDTO;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+
+/**
+ * Entity class representing Products.
+ * This class maps to the 'products' table in the database and contains attributes for product information.
+ * It also includes methods for updating product details based on a DTO.
+ * 
+ * @author Mahammad Khairuddin
+ */
 
 @Entity
 @Table(name = "products")
 public class Products {
 	@Id
-	@SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_seq", allocationSize = 1) // The
-																										// allocationSize
-																										// attribute in
-																										// the
-																										// @SequenceGenerator
-																										// annotation
-																										// specifies how
-																										// many sequence
-																										// values are
-																										// preallocated
-																										// and cached in
-																										// memory by
-																										// Hibernate,
-																										// reducing
-																										// database
-																										// round trips
-																										// for sequence
-																										// generation.
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
-	@Column(name = "product_id")
+//	@SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_seq", allocationSize = 1) 
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
+	@GenericGenerator(name="product_id_seq",strategy="com.startcoding0to1.shopeasybackend.generator.ProductIdGenerator")
+	@GeneratedValue(generator = "product_id_seq")
+	
+	@Column(name = "product_id",length = 200)
 	private String productId;
 
 	@Column(name = "product_name")
@@ -117,6 +121,48 @@ public class Products {
 
 	@Column(name = "featured_product")
 	private char featuredProduct;
+	
+	public Products() {
+		
+	}
+	
+	/**
+	 * Updates the product details based on the provided DTO.
+	 * 
+	 * @param productsDTO The DTO containing updated product information.
+	 * @author Mahammad Khairuddin
+	 */
+	public Products(ProductsDTO productsDTO) {
+		this.productName = productsDTO.getProductName();
+		this.prodCategory = productsDTO.getProdCategory();
+		this.prodPrice = productsDTO.getProdPrice();
+		this.quantity = productsDTO.getQuantity();
+		this.productDesc = productsDTO.getProductDesc();
+		this.manufacturer = productsDTO.getManufacturer();
+		this.imageUrl = productsDTO.getImageUrl();
+		this.videoUrl = productsDTO.getVideoUrl();
+		this.manufacturerDate = productsDTO.getManufacturerDate();
+		this.expiryDate = productsDTO.getExpiryDate();
+		this.brand = productsDTO.getBrand();
+		this.color = productsDTO.getColor();
+		this.productSize = productsDTO.getProductSize();
+		this.weight = productsDTO.getWeight();
+		this.dimensions = productsDTO.getDimensions();
+		this.material = productsDTO.getMaterial();
+		this.sku = productsDTO.getSku();
+		this.barcode = productsDTO.getBarcode();
+		this.regularPrice = productsDTO.getRegularPrice();
+		this.discountPrice = productsDTO.getDiscountPrice();
+		this.currency = productsDTO.getCurrency();
+		this.prodAvailability = productsDTO.getProdAvailability();
+		this.reorderPoint = productsDTO.getReorderPoint();
+		this.warehouseLocation = productsDTO.getWarehouseLocation();
+		this.createdDate = productsDTO.getCreatedDate();
+		this.lastUpdatedDate = productsDTO.getLastUpdatedDate();
+		this.rating = productsDTO.getRating();
+		this.totalReviews = productsDTO.getTotalReviews();
+		this.featuredProduct = productsDTO.getFeaturedProduct();
+	}
 
 	public String getProductId() {
 		return productId;
@@ -396,4 +442,30 @@ public class Products {
 				&& Double.doubleToLongBits(weight) == Double.doubleToLongBits(other.weight);
 	}
 
+	/**
+	 * Updates the product details based on the provided DTO.
+	 * 
+	 * @param productsDTO The DTO containing updated product information.
+	 * @return The updated Products entity.
+	 * @author Mahammad Khairuddin
+	 */
+	public void updateProducts(ProductsDTO productsDTO,Products products) {
+		Field [] fieldsDto=ProductsDTO.class.getDeclaredFields();
+		
+		for(Field fieldDto:fieldsDto) {
+			 try {
+	                fieldDto.setAccessible(true);
+	                String fieldName = fieldDto.getName();
+	                Object value = fieldDto.get(productsDTO);
+	                if(fieldName != "productId") {
+	                	Field field=Products.class.getDeclaredField(fieldName);
+		                field.setAccessible(true);
+		                field.set(products, value);
+	                }
+	                
+	            } catch (IllegalAccessException | NoSuchFieldException e) {
+	                e.printStackTrace();
+	            }
+		}		
+	}
 }
