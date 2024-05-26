@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.startcoding0to1.shopeasybackend.entity.Products;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.ProductsDTO;
-import com.startcoding0to1.shopeasybackend.entity.Products;
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.repository.ProductsRepository;
 import com.startcoding0to1.shopeasybackend.service.ProductsService;
@@ -34,9 +34,6 @@ public class ProductsServiceImpl implements ProductsService {
 	ProductsRepository productsRepository;
 
 	private static final ModelMapper modelMapper = new ModelMapper();
-
-	@Autowired
-	Products products;
 
 	@Override
 	public List<ProductsDTO> getAllProducts() throws ShopEasyException {
