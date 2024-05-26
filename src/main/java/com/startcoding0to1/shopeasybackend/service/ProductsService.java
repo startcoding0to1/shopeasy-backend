@@ -46,7 +46,7 @@ public interface ProductsService {
      * @return A message indicating the result of the operation.
      * @throws ShopEasyException if the product with the specified ID is not found or an error occurs while updating the product.
      */
-    public String updateProduct(String prodId, ProductsDTO productsDTO) throws ShopEasyException;
+    public String updateProduct(String prodId, ProductsDTO productsDTO) throws Exception;
     
     /**
      * Deletes a product.

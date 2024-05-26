@@ -19,7 +19,7 @@ import com.startcoding0to1.shopeasybackend.dto.ProductsDTO;
 import com.startcoding0to1.shopeasybackend.service.ProductsService;
 
 @RestController
-@RequestMapping(value = "/products")
+@RequestMapping(value = "/shopeasy")
 public class ProductsController {
 
     @Autowired
@@ -32,15 +32,11 @@ public class ProductsController {
      * @throws ShopEasyException if there is an error fetching the products.
      * @author Mahammad Khairuddin
      */
-    @GetMapping(value = "/all")
+    @GetMapping(value = "/products")
     public ResponseEntity<List<ProductsDTO>> getAllProducts() throws ShopEasyException {
         List<ProductsDTO> products;
-        try {
-            products = productsService.getAllProducts();
-            return new ResponseEntity<>(products, HttpStatus.OK);
-        } catch (ShopEasyException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        products = productsService.getAllProducts();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     /**
@@ -65,7 +61,7 @@ public class ProductsController {
      * @throws ShopEasyException if there is an error adding the product.
      * @author Mahammad Khairuddin
      */
-    @PostMapping(value="/add")
+    @PostMapping(value="/product")
     public ResponseEntity<String> addProduct(@RequestBody ProductsDTO productsDTO) throws ShopEasyException {
         String message = productsService.addProduct(productsDTO);
         return new ResponseEntity<>(message, HttpStatus.CREATED);
@@ -80,8 +76,8 @@ public class ProductsController {
      * @throws ShopEasyException if there is an error updating the product.
      * @author Mahammad Khairuddin
      */
-    @PutMapping(value="/update/{id}")
-    public ResponseEntity<String> updateProduct(@PathVariable(value="id") String prodId, @RequestBody ProductsDTO productsDTO) throws ShopEasyException {
+    @PutMapping(value="/product/{id}")
+    public ResponseEntity<String> updateProduct(@PathVariable(value="id") String prodId, @RequestBody ProductsDTO productsDTO) throws Exception {
         String message = productsService.updateProduct(prodId, productsDTO);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
@@ -94,7 +90,7 @@ public class ProductsController {
      * @throws ShopEasyException if there is an error deleting the product.
      * @author Mahammad Khairuddin
      */
-    @DeleteMapping(value="/delete/{prodId}")
+    @DeleteMapping(value="/product/{prodId}")
     public ResponseEntity<String> deleteProduct(@PathVariable String prodId) throws ShopEasyException {
         String message = productsService.deleteProduct(prodId);
         return new ResponseEntity<>(message, HttpStatus.OK);

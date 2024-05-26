@@ -29,7 +29,7 @@ public class ProductIdGenerator implements IdentifierGenerator {
         try {
             Connection con = session.getJdbcConnectionAccess().obtainConnection();
             Statement stmt = con.createStatement();
-            String sql = "Select product_id_seq.NEXTVAL from dual";
+            String sql = "Select PRODUCT_SEQUENCE.NEXTVAL from dual";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 int seqval = rs.getInt(1);

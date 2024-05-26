@@ -9,7 +9,7 @@ public class ShopEasyConstants {
 	
 	public static final String NO_PRODUCTS_FOUND = "No Products Found ";
 	
-	public static final String No_RECORDS_FOUND_FOR = "No records found for ";
+	public static final String No_RECORDS_FOUND_FOR = "No records found for given product Id: ";
 	
 	public static final String RECORD_SUCCESSFULLY_UPDATED="Record successfully updated Id: ";
 	
