@@ -1,1 +1,1 @@
-# shopeasy-backend
+# shopeasy - backend
