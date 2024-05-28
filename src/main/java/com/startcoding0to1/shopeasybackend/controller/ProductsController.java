@@ -2,6 +2,7 @@ package com.startcoding0to1.shopeasybackend.controller;
 
 import java.util.List;
 
+import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
-import com.startcoding0to1.shopeasybackend.dto.ProductsDTO;
+import com.startcoding0to1.shopeasybackend.dto.ProductDTO;
 import com.startcoding0to1.shopeasybackend.service.ProductsService;
 
 @RestController
-@RequestMapping(value = "/shopeasy")
+@RequestMapping(value = "/startcoding0to1/shopEasy")
 public class ProductsController {
 
     @Autowired
@@ -33,8 +34,8 @@ public class ProductsController {
      * @author Mahammad Khairuddin
      */
     @GetMapping(value = "/products")
-    public ResponseEntity<List<ProductsDTO>> getAllProducts() throws ShopEasyException {
-        List<ProductsDTO> products;
+    public ResponseEntity<List<ProductDTO>> getAllProducts() throws ShopEasyException {
+        List<ProductDTO> products;
         products = productsService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
@@ -48,8 +49,11 @@ public class ProductsController {
      * @author Mahammad Khairuddin
      */
     @GetMapping(value="/product/{id}")
-    public ResponseEntity<ProductsDTO> getProductById(@PathVariable(value="id") String prodId) throws ShopEasyException {
-        ProductsDTO productsDTO = productsService.getProductById(prodId);
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable(value="id") String prodId) throws ShopEasyException {
+        if(prodId==null || prodId.trim().isEmpty()){
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+        }
+        ProductDTO productsDTO = productsService.getProductById(prodId);
         return new ResponseEntity<>(productsDTO, HttpStatus.OK);
     }
 
@@ -62,7 +66,10 @@ public class ProductsController {
      * @author Mahammad Khairuddin
      */
     @PostMapping(value="/product")
-    public ResponseEntity<String> addProduct(@RequestBody ProductsDTO productsDTO) throws ShopEasyException {
+    public ResponseEntity<String> addProduct(@RequestBody ProductDTO productsDTO) throws ShopEasyException {
+        if(productsDTO==null){
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+        }
         String message = productsService.addProduct(productsDTO);
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
@@ -77,7 +84,10 @@ public class ProductsController {
      * @author Mahammad Khairuddin
      */
     @PutMapping(value="/product/{id}")
-    public ResponseEntity<String> updateProduct(@PathVariable(value="id") String prodId, @RequestBody ProductsDTO productsDTO) throws Exception {
+    public ResponseEntity<String> updateProduct(@PathVariable(value="id") String prodId, @RequestBody ProductDTO productsDTO) throws Exception {
+        if(prodId==null || prodId.trim().isEmpty() || productsDTO == null){
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+        }
         String message = productsService.updateProduct(prodId, productsDTO);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
@@ -92,6 +102,9 @@ public class ProductsController {
      */
     @DeleteMapping(value="/product/{prodId}")
     public ResponseEntity<String> deleteProduct(@PathVariable String prodId) throws ShopEasyException {
+        if(prodId==null || prodId.trim().isEmpty()){
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+        }
         String message = productsService.deleteProduct(prodId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

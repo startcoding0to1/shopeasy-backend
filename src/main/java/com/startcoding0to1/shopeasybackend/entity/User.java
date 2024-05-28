@@ -1,20 +1,26 @@
 package com.startcoding0to1.shopeasybackend.entity;
 
 import com.startcoding0to1.shopeasybackend.generator.UserIdGenerator;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "_user")
-public class User {
+@Table(name = "users")
+public  class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GenericGenerator(name="user_id_seq", type=UserIdGenerator.class)
     @GeneratedValue(generator = "user_id_seq")
-    @Column(name = "user_id")
-    private Integer userId;
+    @Column(name = "user_id",length = 200)
+    private String userId;
 
     @Column(name = "first_name")
     private String userFirstName;
@@ -23,31 +29,8 @@ public class User {
     private String userLastName;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private Set<Address> addresses;
-
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(
-            name="USER_ROLE",
-            joinColumns = {
-                    @JoinColumn(name="USER_ID", nullable = false),
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name="ROLE_ID", nullable = false)
-            }
-    )
-    private Set<Roles> roles;
-
-//    @JoinTable(
-//            name="USER_PRODUCTS",
-//            joinColumns = {
-//                    @JoinColumn(name="USER_ID")
-//            },
-//            inverseJoinColumns = {
-//                    @JoinColumn(name = "Product_ID")
-//            }
-//    )
-//    private Set<Products> products;
+    @JoinColumn(name = "address")
+    private Set<Address> address;
 
     @Column(name = "phone_number")
     private Long phoneNumber;
@@ -58,11 +41,27 @@ public class User {
     @Column(name = "password")
     private String userPassword;
 
-    public Integer getUserId() {
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Column(name = "role")
+    private Set<Role> roles;
+
+    @Column(name = "creation_time")
+    private LocalDateTime creationTime;
+
+    @Column(name = "last_update_time")
+    private LocalDateTime lastUpdateTime;
+
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -82,12 +81,12 @@ public class User {
         this.userLastName = userLastName;
     }
 
-    public Set<Address> getAddresses() {
-        return addresses;
+    public Set<Address> getAddress() {
+        return address;
     }
 
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
+    public void setAddress(Set<Address> address) {
+        this.address = address;
     }
 
     public Long getPhoneNumber() {
@@ -102,6 +101,14 @@ public class User {
         return userEmail;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
@@ -112,5 +119,50 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public LocalDateTime getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(getUserId(), user.getUserId()) && Objects.equals(getUserFirstName(), user.getUserFirstName()) && Objects.equals(getUserLastName(), user.getUserLastName()) && Objects.equals(getAddress(), user.getAddress()) && Objects.equals(getPhoneNumber(), user.getPhoneNumber()) && Objects.equals(getUserEmail(), user.getUserEmail()) && Objects.equals(getUserPassword(), user.getUserPassword()) && Objects.equals(getRoles(), user.getRoles()) && Objects.equals(getCreationTime(), user.getCreationTime()) && Objects.equals(getLastUpdateTime(), user.getLastUpdateTime());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserId(), getUserFirstName(), getUserLastName(), getAddress(), getPhoneNumber(), getUserEmail(), getUserPassword(), getRoles(), getCreationTime(), getLastUpdateTime());
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", userFirstName='" + userFirstName + '\'' +
+                ", userLastName='" + userLastName + '\'' +
+                ", address=" + address +
+                ", phoneNumber=" + phoneNumber +
+                ", userEmail='" + userEmail + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", roles=" + roles +
+                ", creationTime=" + creationTime +
+                ", lastUpdateTime=" + lastUpdateTime +
+                '}';
     }
 }

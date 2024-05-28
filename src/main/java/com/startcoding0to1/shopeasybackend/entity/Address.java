@@ -2,12 +2,17 @@ package com.startcoding0to1.shopeasybackend.entity;
 
 import jakarta.persistence.*;
 
-@Entity
-public class Address {
+import java.io.Serializable;
+import java.util.Objects;
 
+@Entity
+public class Address implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(generator ="address_id_gen")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="address_id_gen")
     @SequenceGenerator(name = "address_id_gen",sequenceName = "address_id_seq",allocationSize = 1)
+    @Column(name = "address_id")
     private Integer AddressId;
 
     @Column(name = "house_no")
@@ -82,5 +87,31 @@ public class Address {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(getAddressId(), address.getAddressId()) && Objects.equals(getHouseNo(), address.getHouseNo()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getLandmark(), address.getLandmark()) && Objects.equals(getPincode(), address.getPincode()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getState(), address.getState());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAddressId(), getHouseNo(), getStreet(), getLandmark(), getPincode(), getCity(), getState());
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "AddressId=" + AddressId +
+                ", houseNo='" + houseNo + '\'' +
+                ", street='" + street + '\'' +
+                ", landmark='" + landmark + '\'' +
+                ", pincode=" + pincode +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                '}';
     }
 }

@@ -1,7 +1,9 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
-import com.startcoding0to1.shopeasybackend.entity.Products;
-import jakarta.annotation.Nullable;
+import com.startcoding0to1.shopeasybackend.entity.User;
+import jakarta.persistence.Column;
+
+import java.time.LocalDateTime;
 
 /**
  * Data Transfer Object (DTO) for Products.
@@ -10,7 +12,7 @@ import jakarta.annotation.Nullable;
  *
  * @author Mahammad Khairuddin
  */
-public class ProductsDTO {
+public class ProductDTO {
 	private String productId;
 
 	private String productName;
@@ -29,12 +31,6 @@ public class ProductsDTO {
 
 	private String productDesc;
 
-	@Nullable
-	private String seller;
-
-	@Nullable
-	private String customer;
-
 	private String imageUrl;
 
 	private String videoUrl;
@@ -45,7 +41,13 @@ public class ProductsDTO {
 
 	private int rating;
 
+	private User seller;
+
 	private int totalReviews;
+
+	private LocalDateTime creationTime;
+
+	private LocalDateTime lastUpdateTime;
 
 	public String getProductId() {
 		return productId;
@@ -119,44 +121,6 @@ public class ProductsDTO {
 		this.productDesc = productDesc;
 	}
 
-	public String getSeller() {
-		return seller;
-	}
-
-	public void setSeller(String seller) {
-		this.seller = seller;
-	}
-
-	ProductsDTO(){}
-
-	public ProductsDTO(Products products) {
-		this.productId = products.getProductId();
-		this.productName = products.getProductName();
-		this.prodCategory = products.getProdCategory();
-		this.prodSubCategory = products.getProdSubCategory();
-		this.prodPrice = products.getProdPrice();
-		this.discountPrice = products.getDiscountPrice();
-		this.quantity = products.getQuantity();
-		this.prodAvailability = products.getProdAvailability();
-		this.productDesc = products.getProductDesc();
-		this.seller = products.getSeller();
-		this.customer = products.getCustomer();
-		this.imageUrl = products.getImageUrl();
-		this.videoUrl = products.getVideoUrl();
-		this.brand = products.getBrand();
-		this.productSize = products.getProductSize();
-		this.rating = products.getRating();
-		this.totalReviews = products.getTotalReviews();
-	}
-
-	public String getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(String customer) {
-		this.customer = customer;
-	}
-
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -199,5 +163,33 @@ public class ProductsDTO {
 
 	public int getTotalReviews() {
 		return totalReviews;
+	}
+
+	public void setTotalReviews(int totalReviews) {
+		this.totalReviews = totalReviews;
+	}
+
+	public User getSeller() {
+		return seller;
+	}
+
+	public void setSeller(User seller) {
+		this.seller = seller;
+	}
+
+	public LocalDateTime getCreationTime() {
+		return creationTime;
+	}
+
+	public void setCreationTime(LocalDateTime creationTime) {
+		this.creationTime = creationTime;
+	}
+
+	public LocalDateTime getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
+	public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
 	}
 }

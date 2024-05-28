@@ -3,7 +3,7 @@ package com.startcoding0to1.shopeasybackend.service;
 import java.util.List;
 
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
-import com.startcoding0to1.shopeasybackend.dto.ProductsDTO;
+import com.startcoding0to1.shopeasybackend.dto.ProductDTO;
 
 /**
  * Service interface for managing product-related operations.
@@ -18,7 +18,7 @@ public interface ProductsService {
      * @return A list of ProductsDTO representing all products.
      * @throws ShopEasyException if an error occurs while retrieving products.
      */
-    public List<ProductsDTO> getAllProducts() throws ShopEasyException;
+    public List<ProductDTO> getAllProducts() throws ShopEasyException;
     
     /**
      * Retrieves a product by its ID.
@@ -27,7 +27,7 @@ public interface ProductsService {
      * @return The ProductsDTO representing the product with the specified ID.
      * @throws ShopEasyException if the product with the specified ID is not found.
      */
-    public ProductsDTO getProductById(String prodId) throws ShopEasyException;
+    public ProductDTO getProductById(String prodId) throws ShopEasyException;
     
     /**
      * Adds a new product.
@@ -36,7 +36,7 @@ public interface ProductsService {
      * @return A message indicating the result of the operation.
      * @throws ShopEasyException if an error occurs while adding the product.
      */
-    public String addProduct(ProductsDTO productsDTO) throws ShopEasyException;
+    public String addProduct(ProductDTO productsDTO) throws ShopEasyException;
     
     /**
      * Updates an existing product.
@@ -46,7 +46,7 @@ public interface ProductsService {
      * @return A message indicating the result of the operation.
      * @throws ShopEasyException if the product with the specified ID is not found or an error occurs while updating the product.
      */
-    public String updateProduct(String prodId, ProductsDTO productsDTO) throws Exception;
+    public String updateProduct(String prodId, ProductDTO productsDTO) throws Exception;
     
     /**
      * Deletes a product.
