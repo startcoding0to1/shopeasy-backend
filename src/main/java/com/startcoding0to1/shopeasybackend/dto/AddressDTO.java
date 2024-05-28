@@ -1,5 +1,10 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
+import com.startcoding0to1.shopeasybackend.entity.Address;
+import com.startcoding0to1.shopeasybackend.entity.User;
+
+import java.util.Objects;
+
 public class AddressDTO {
 
     private Integer addressId;
@@ -9,8 +14,7 @@ public class AddressDTO {
     private Long pincode;
     private String city;
     private String state;
-
-    // Getters and Setters
+    private User userId;
 
     public Integer getAddressId() {
         return addressId;
@@ -66,5 +70,40 @@ public class AddressDTO {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(getAddressId(), address.getAddressId()) && Objects.equals(getHouseNo(), address.getHouseNo()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getLandmark(), address.getLandmark()) && Objects.equals(getPincode(), address.getPincode()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getState(), address.getState()) && Objects.equals(getUserId(), address.getUserId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAddressId(), getHouseNo(), getStreet(), getLandmark(), getPincode(), getCity(), getState(), getUserId());
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "AddressId=" + addressId +
+                ", houseNo='" + houseNo + '\'' +
+                ", street='" + street + '\'' +
+                ", landmark='" + landmark + '\'' +
+                ", pincode=" + pincode +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", user=" + userId +
+                '}';
     }
 }

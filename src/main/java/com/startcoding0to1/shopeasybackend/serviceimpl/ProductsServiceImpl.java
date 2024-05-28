@@ -106,7 +106,6 @@ public class ProductsServiceImpl implements ProductsService {
 					field.setAccessible(true);
 					field.set(product, value);
 				}
-
 			} catch (IllegalAccessException e) {
 				throw new ShopEasyException(e.getMessage(),HttpStatus.FORBIDDEN);
 			}

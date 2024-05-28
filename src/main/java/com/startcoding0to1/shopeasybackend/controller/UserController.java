@@ -24,7 +24,7 @@ public class UserController {
     @PostMapping(value = "/auth/register")
     public ResponseEntity<AuthResponse> registerUser(@RequestBody UserDTO userDTO) throws ShopEasyException {
         if(userDTO==null){
-            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
         }
         AuthResponse authResponse = userService.registerUser(userDTO);
 
@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping(value="/auth/login")
     public ResponseEntity<AuthResponse> authentication(@RequestBody AuthRequest authRequest) throws ShopEasyException {
         if(authRequest==null){
-            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
         }
         AuthResponse authResponse = userService.authentication(authRequest);
         return new ResponseEntity<>(authResponse,HttpStatus.OK);
@@ -54,7 +54,7 @@ public class UserController {
     @GetMapping(value = "/user/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable(name = "id") String userId) throws ShopEasyException {
         if(userId==null || userId.trim().isEmpty()){
-            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
         }
         UserDTO userDTO = userService.getUser(userId);
         return new ResponseEntity<>(userDTO,HttpStatus.OK);
@@ -63,7 +63,7 @@ public class UserController {
     @PutMapping(value="/user/{id}")
     public ResponseEntity<String> updateUser(@PathVariable(name = "id") String userId,@RequestBody UserDTO userDTO) throws ShopEasyException {
         if(userDTO==null || userId==null || userId.trim().isEmpty()){
-            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
         }
         String message = userService.updateUser(userId,userDTO);
         return new ResponseEntity<>(message,HttpStatus.OK);
@@ -72,7 +72,7 @@ public class UserController {
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable(name = "id") String userId) throws ShopEasyException {
         if(userId==null || userId.trim().isEmpty()){
-            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
         }
         String message = userService.deleteUser(userId);
         return new ResponseEntity<>(message,HttpStatus.OK);
