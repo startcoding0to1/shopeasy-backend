@@ -28,10 +28,6 @@ public  class User implements Serializable {
     @Column(name = "last_name")
     private String userLastName;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "address")
-    private Set<Address> address;
-
     @Column(name = "phone_number")
     private Long phoneNumber;
 
@@ -56,7 +52,6 @@ public  class User implements Serializable {
     @Column(name = "last_update_time")
     private LocalDateTime lastUpdateTime;
 
-
     public String getUserId() {
         return userId;
     }
@@ -79,14 +74,6 @@ public  class User implements Serializable {
 
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
-    }
-
-    public Set<Address> getAddress() {
-        return address;
-    }
-
-    public void setAddress(Set<Address> address) {
-        this.address = address;
     }
 
     public Long getPhoneNumber() {
@@ -142,12 +129,12 @@ public  class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(getUserId(), user.getUserId()) && Objects.equals(getUserFirstName(), user.getUserFirstName()) && Objects.equals(getUserLastName(), user.getUserLastName()) && Objects.equals(getAddress(), user.getAddress()) && Objects.equals(getPhoneNumber(), user.getPhoneNumber()) && Objects.equals(getUserEmail(), user.getUserEmail()) && Objects.equals(getUserPassword(), user.getUserPassword()) && Objects.equals(getRoles(), user.getRoles()) && Objects.equals(getCreationTime(), user.getCreationTime()) && Objects.equals(getLastUpdateTime(), user.getLastUpdateTime());
+        return Objects.equals(getUserId(), user.getUserId()) && Objects.equals(getUserFirstName(), user.getUserFirstName()) && Objects.equals(getUserLastName(), user.getUserLastName()) && Objects.equals(getPhoneNumber(), user.getPhoneNumber()) && Objects.equals(getUserEmail(), user.getUserEmail()) && Objects.equals(getUserPassword(), user.getUserPassword()) && Objects.equals(getRoles(), user.getRoles()) && Objects.equals(getCreationTime(), user.getCreationTime()) && Objects.equals(getLastUpdateTime(), user.getLastUpdateTime());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getUserFirstName(), getUserLastName(), getAddress(), getPhoneNumber(), getUserEmail(), getUserPassword(), getRoles(), getCreationTime(), getLastUpdateTime());
+        return Objects.hash(getUserId(), getUserFirstName(), getUserLastName(), getPhoneNumber(), getUserEmail(), getUserPassword(), getRoles(), getCreationTime(), getLastUpdateTime());
     }
 
     @Override
@@ -156,7 +143,6 @@ public  class User implements Serializable {
                 "userId='" + userId + '\'' +
                 ", userFirstName='" + userFirstName + '\'' +
                 ", userLastName='" + userLastName + '\'' +
-                ", address=" + address +
                 ", phoneNumber=" + phoneNumber +
                 ", userEmail='" + userEmail + '\'' +
                 ", userPassword='" + userPassword + '\'' +

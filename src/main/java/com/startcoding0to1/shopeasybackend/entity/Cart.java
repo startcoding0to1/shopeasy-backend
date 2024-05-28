@@ -13,7 +13,7 @@ public class Cart implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "cart_id_seq")
-    @SequenceGenerator(name = "cart_id_seq" ,sequenceName = "cart_sequence")
+    @SequenceGenerator(name = "cart_id_seq" ,sequenceName = "cart_sequence", allocationSize = 1)
     @Column(name = "cart_id")
     private Integer cartId;
     @ManyToOne(cascade = CascadeType.ALL)

@@ -8,6 +8,7 @@ import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.repository.AddressRepository;
 import com.startcoding0to1.shopeasybackend.repository.ProductsRepository;
 import com.startcoding0to1.shopeasybackend.repository.UserRepository;
+import com.startcoding0to1.shopeasybackend.service.AddressService;
 import com.startcoding0to1.shopeasybackend.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private AddressService addressService;
 
     @Autowired
     private ProductsRepository productsRepository;
@@ -94,21 +98,16 @@ public class UserServiceImpl implements UserService {
     public String updateUser(String userId, UserDTO userDTO) throws ShopEasyException {
         Optional<User> optional=userRepository.findById(userId);
         User user=optional.orElseThrow(() -> new ShopEasyException(ShopEasyConstants.NO_RECORDS_FOUND_FOR_USER_ID+userId,HttpStatus.NOT_FOUND));
-        if(userDTO.getAddress()!=null){
-            Set<Address> addresses=new HashSet<Address>();
-            Set<AddressDTO> addressDTOS=userDTO.getAddress();
-            addressDTOS.forEach(addressDTO -> {
-                Address address=updateAddress(addressDTO);
-                addresses.add(address);
-            });
-            user.setAddress(addresses);
-        }
         user.setUserFirstName(userDTO.getUserFirstName()!=null?userDTO.getUserFirstName():user.getUserFirstName());
         user.setUserLastName(userDTO.getUserLastName()!=null?userDTO.getUserLastName():user.getUserLastName());
         user.setUserEmail(userDTO.getUserEmail()!=null?userDTO.getUserEmail():user.getUserEmail());
         user.setRoles(userDTO.getRoles()!=null?userDTO.getRoles():user.getRoles());
         user.setUserPassword(userDTO.getUserPassword()!=null?userDTO.getUserPassword():user.getUserPassword());
         user.setPhoneNumber(userDTO.getPhoneNumber()!=null?userDTO.getPhoneNumber():user.getPhoneNumber());
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime=localDateTime.format(dateTimeFormatter);
+        user.setLastUpdateTime(LocalDateTime.parse(currentTime,dateTimeFormatter));
         return ShopEasyConstants.RECORD_SUCCESSFULLY_UPDATED+user.getUserId();
     }
 
@@ -118,33 +117,23 @@ public class UserServiceImpl implements UserService {
     public String deleteUser(String userId) throws ShopEasyException {
         Optional<User> optional=userRepository.findById(userId);
         User user=optional.orElseThrow(()->new ShopEasyException(ShopEasyConstants.NO_RECORDS_FOUND_FOR_USER_ID+userId,HttpStatus.NOT_FOUND));
-        Set<Address> addresses=user.getAddress();
-        addresses.forEach(address -> {
-            addressRepository.deleteById(address.getAddressId());
-        });
-        userRepository.deleteById(userId);
+        UserDTO userDTO=new UserDTO();
+        userDTO.setUserId(user.getUserId());
+        Set<AddressDTO> addressDTOS=addressService.getAllUserAddresses(userDTO);
+        if(addressDTOS != null){
+            addressDTOS.forEach(addressDTO -> {
+                try {
+                    addressService.deleteAddress(addressDTO.getAddressId());
+                } catch (ShopEasyException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+        userRepository.deleteById(user.getUserId());
         return ShopEasyConstants.RECORD_SUCCESSFULLY_DELETED+userId;
     }
 
-    private static Address dtoToEntity(AddressDTO addressDTO){
-        if(addressDTO==null){
-            return null;
-        }
-        Address address=new Address();
-        address.setHouseNo(addressDTO.getHouseNo());
-        address.setCity(addressDTO.getCity());
-        address.setStreet(addressDTO.getStreet());
-        address.setLandmark(addressDTO.getLandmark());
-        address.setState(addressDTO.getState());
-        address.setPincode(addressDTO.getPincode());
-        return address;
-    }
-
     private User dtoToEntity(UserDTO userDTO) {
-        if (userDTO == null) {
-            return null;
-        }
-
         User user = new User();
         user.setUserFirstName(userDTO.getUserFirstName());
         user.setUserLastName(userDTO.getUserLastName());
@@ -152,45 +141,10 @@ public class UserServiceImpl implements UserService {
         user.setUserEmail(userDTO.getUserEmail());
         user.setUserPassword(userDTO.getUserPassword());
         user.setRoles(userDTO.getRoles());
-        Set<AddressDTO> addressDTOS = userDTO.getAddress();
-        if (addressDTOS != null) {
-            Set<Address> addresses = new HashSet<>();
-            for (AddressDTO addressDTO : addressDTOS) {
-                Address address = dtoToEntity(addressDTO);
-                if (address != null) {
-                    address = addressRepository.save(address);
-                    addressDTO.setAddressId(address.getAddressId());
-                    addresses.add(address);
-                }
-            }
-            user.setAddress(addresses);
-        } else {
-            user.setAddress(null);
-        }
         return user;
     }
 
-
-    private static AddressDTO entityToDTO(Address address) {
-        if (address == null) {
-            return null;
-        }
-        AddressDTO addressDTO = new AddressDTO();
-        addressDTO.setAddressId(address.getAddressId());
-        addressDTO.setHouseNo(address.getHouseNo());
-        addressDTO.setCity(address.getCity());
-        addressDTO.setStreet(address.getStreet());
-        addressDTO.setLandmark(address.getLandmark());
-        addressDTO.setState(address.getState());
-        addressDTO.setPincode(address.getPincode());
-        return addressDTO;
-    }
-
     public static UserDTO entityToDTO(User user) {
-        if (user == null) {
-            return null;
-        }
-
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(user.getUserId());
         userDTO.setUserFirstName(user.getUserFirstName());
@@ -199,40 +153,6 @@ public class UserServiceImpl implements UserService {
         userDTO.setUserEmail(user.getUserEmail());
         userDTO.setUserPassword(user.getUserPassword());
         userDTO.setRoles(user.getRoles());
-
-        Set<Address> addresses = user.getAddress();
-        if (addresses != null) {
-            Set<AddressDTO> addressDTOS = new HashSet<>();
-            for (Address address : addresses) {
-                AddressDTO addressDTO = entityToDTO(address);
-                if (addressDTO != null) {
-                    addressDTOS.add(addressDTO);
-                }
-            }
-            userDTO.setAddress(addressDTOS);
-        } else {
-            userDTO.setAddress(null);
-        }
         return userDTO;
     }
-
-    private Address updateAddress(AddressDTO addressDTO) {
-        Optional<Address> optional = addressRepository.findById(addressDTO.getAddressId());
-        if (optional.isPresent()){
-            Address address = optional.get();
-            address.setPincode(addressDTO.getPincode());
-            address.setStreet(addressDTO.getStreet());
-            address.setCity(addressDTO.getCity());
-            address.setState(addressDTO.getState());
-            address.setLandmark(addressDTO.getLandmark());
-            address.setHouseNo(addressDTO.getHouseNo());
-            return address;
-        }
-        else{
-            Address address=dtoToEntity(addressDTO);
-            return addressRepository.save(address);
-        }
-    }
-
-
 }

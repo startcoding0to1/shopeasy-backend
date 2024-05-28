@@ -13,7 +13,7 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="address_id_gen")
     @SequenceGenerator(name = "address_id_gen",sequenceName = "address_id_seq",allocationSize = 1)
     @Column(name = "address_id")
-    private Integer AddressId;
+    private Integer addressId;
 
     @Column(name = "house_no")
     private String houseNo;
@@ -33,12 +33,16 @@ public class Address implements Serializable {
     @Column(name = "state")
     private String state;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User userId;
+
     public Integer getAddressId() {
-        return AddressId;
+        return addressId;
     }
 
     public void setAddressId(Integer addressId) {
-        AddressId = addressId;
+        this.addressId = addressId;
     }
 
     public String getHouseNo() {
@@ -89,29 +93,38 @@ public class Address implements Serializable {
         this.state = state;
     }
 
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(getAddressId(), address.getAddressId()) && Objects.equals(getHouseNo(), address.getHouseNo()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getLandmark(), address.getLandmark()) && Objects.equals(getPincode(), address.getPincode()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getState(), address.getState());
+        return Objects.equals(getAddressId(), address.getAddressId()) && Objects.equals(getHouseNo(), address.getHouseNo()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getLandmark(), address.getLandmark()) && Objects.equals(getPincode(), address.getPincode()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getState(), address.getState()) && Objects.equals(getUserId(), address.getUserId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAddressId(), getHouseNo(), getStreet(), getLandmark(), getPincode(), getCity(), getState());
+        return Objects.hash(getAddressId(), getHouseNo(), getStreet(), getLandmark(), getPincode(), getCity(), getState(), getUserId());
     }
 
     @Override
     public String toString() {
         return "Address{" +
-                "AddressId=" + AddressId +
+                "AddressId=" + addressId +
                 ", houseNo='" + houseNo + '\'' +
                 ", street='" + street + '\'' +
                 ", landmark='" + landmark + '\'' +
                 ", pincode=" + pincode +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
+                ", user=" + userId +
                 '}';
     }
 }

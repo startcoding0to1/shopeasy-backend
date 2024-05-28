@@ -51,7 +51,7 @@ public class ProductsController {
     @GetMapping(value="/product/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable(value="id") String prodId) throws ShopEasyException {
         if(prodId==null || prodId.trim().isEmpty()){
-            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
         }
         ProductDTO productsDTO = productsService.getProductById(prodId);
         return new ResponseEntity<>(productsDTO, HttpStatus.OK);
@@ -68,7 +68,7 @@ public class ProductsController {
     @PostMapping(value="/product")
     public ResponseEntity<String> addProduct(@RequestBody ProductDTO productsDTO) throws ShopEasyException {
         if(productsDTO==null){
-            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
         }
         String message = productsService.addProduct(productsDTO);
         return new ResponseEntity<>(message, HttpStatus.CREATED);
@@ -86,7 +86,7 @@ public class ProductsController {
     @PutMapping(value="/product/{id}")
     public ResponseEntity<String> updateProduct(@PathVariable(value="id") String prodId, @RequestBody ProductDTO productsDTO) throws Exception {
         if(prodId==null || prodId.trim().isEmpty() || productsDTO == null){
-            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
         }
         String message = productsService.updateProduct(prodId, productsDTO);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -103,7 +103,7 @@ public class ProductsController {
     @DeleteMapping(value="/product/{prodId}")
     public ResponseEntity<String> deleteProduct(@PathVariable String prodId) throws ShopEasyException {
         if(prodId==null || prodId.trim().isEmpty()){
-            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.NO_CONTENT);
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
         }
         String message = productsService.deleteProduct(prodId);
         return new ResponseEntity<>(message, HttpStatus.OK);
