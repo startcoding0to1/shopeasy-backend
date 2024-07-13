@@ -8,9 +8,9 @@ import java.util.Set;
 
 public interface AddressService {
 
-    public Set<AddressDTO> getAllUserAddresses(UserDTO userId);
+    public Set<AddressDTO> getAllUserAddresses(Integer userDetailsId,String userId,String typeOfUser) throws ShopEasyException;
 
-    public String addAddress(AddressDTO addressDTO) throws ShopEasyException;
+    public String addAddress(AddressDTO addressDTO,String typeOfUser) throws ShopEasyException;
 
     public String updateAddress(Integer addressId,AddressDTO addressDTO) throws ShopEasyException;
 

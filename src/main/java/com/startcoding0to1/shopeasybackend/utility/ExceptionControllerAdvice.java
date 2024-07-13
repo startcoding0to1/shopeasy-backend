@@ -1,4 +1,5 @@
 package com.startcoding0to1.shopeasybackend.utility;
+import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -27,9 +28,15 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorInfo> exceptionHandler(Exception exception){
         ErrorInfo errorInfo=new ErrorInfo();
-        errorInfo.setErrorMessage(exception.getMessage());
-        errorInfo.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        errorInfo.setTimestamp(LocalDateTime.now());
+        if(exception.getMessage().contains("No static resource")){
+            errorInfo.setErrorMessage(ShopEasyConstants.CHECK_URL);
+            errorInfo.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorInfo.setTimestamp(LocalDateTime.now());
+        }else {
+            errorInfo.setErrorMessage(exception.getMessage());
+            errorInfo.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorInfo.setTimestamp(LocalDateTime.now());
+        }
         return new ResponseEntity<ErrorInfo>(errorInfo,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

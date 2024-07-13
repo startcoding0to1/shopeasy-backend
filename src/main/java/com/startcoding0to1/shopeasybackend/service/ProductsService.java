@@ -1,7 +1,9 @@
 package com.startcoding0to1.shopeasybackend.service;
 
 import java.util.List;
+import java.util.Set;
 
+import com.startcoding0to1.shopeasybackend.entity.Product;
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.dto.ProductDTO;
 
@@ -56,4 +58,6 @@ public interface ProductsService {
      * @throws ShopEasyException if the product with the specified ID is not found or an error occurs while deleting the product.
      */
     public String deleteProduct(String prodId) throws ShopEasyException;
+
+    public Set<ProductDTO> getAllProductsOfGivenSeller(Integer sellerId) throws ShopEasyException;
 }

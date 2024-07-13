@@ -1,6 +1,7 @@
 package com.startcoding0to1.shopeasybackend.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class ProductsController {
      * @throws ShopEasyException if there is an error adding the product.
      * @author Mahammad Khairuddin
      */
-    @PostMapping(value="/product")
+    @PostMapping(value="/product",produces = "application/json")
     public ResponseEntity<String> addProduct(@RequestBody ProductDTO productsDTO) throws ShopEasyException {
         if(productsDTO==null){
             throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
@@ -107,5 +108,14 @@ public class ProductsController {
         }
         String message = productsService.deleteProduct(prodId);
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/products/{seller}")
+    public ResponseEntity<Set<ProductDTO>> getAllProductsOfGivenSeller(@PathVariable(name = "seller") Integer sellerId) throws ShopEasyException {
+        if(sellerId==null){
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
+        }
+        Set<ProductDTO> productDTOS = productsService.getAllProductsOfGivenSeller(sellerId);
+        return new ResponseEntity<>(productDTOS, HttpStatus.OK);
     }
 }

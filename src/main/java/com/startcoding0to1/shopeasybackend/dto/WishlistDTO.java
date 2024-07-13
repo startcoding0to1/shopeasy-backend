@@ -1,18 +1,17 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
-import com.startcoding0to1.shopeasybackend.entity.Product;
-import com.startcoding0to1.shopeasybackend.entity.User;
-import com.startcoding0to1.shopeasybackend.entity.Wishlist;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Set;
+
+@JsonInclude(value = JsonInclude.Include.NON_EMPTY)
 public class WishlistDTO {
     private Integer wishlistId;
-    private Product productId;
-    private User userId;
+    private String productId;
+    private Integer customerDetailsId;
     private boolean isLiked;
-    private LocalDateTime creationTime;
+    private String creationTime;
 
     public Integer getWishlistId() {
         return wishlistId;
@@ -22,20 +21,20 @@ public class WishlistDTO {
         this.wishlistId = wishlistId;
     }
 
-    public Product getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(Product productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
-    public User getUserId() {
-        return userId;
+    public Integer getCustomerDetailsId() {
+        return customerDetailsId;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setCustomerDetailsId(Integer customerDetailsId) {
+        this.customerDetailsId = customerDetailsId;
     }
 
     public boolean isLiked() {
@@ -46,35 +45,12 @@ public class WishlistDTO {
         isLiked = liked;
     }
 
-    public LocalDateTime getCreationTime() {
+    public String getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(LocalDateTime creationTime) {
+    public void setCreationTime(String creationTime) {
         this.creationTime = creationTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Wishlist wishlist = (Wishlist) o;
-        return isLiked() == wishlist.isLiked() && Objects.equals(getWishlistId(), wishlist.getWishlistId()) && Objects.equals(getProductId(), wishlist.getProductId()) && Objects.equals(getUserId(), wishlist.getUserId()) && Objects.equals(getCreationTime(), wishlist.getCreationTime());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getWishlistId(), getProductId(), getUserId(), isLiked(), getCreationTime());
-    }
-
-    @Override
-    public String toString() {
-        return "Wishlist{" +
-                "wishlistId=" + wishlistId +
-                ", productId=" + productId +
-                ", userId=" + userId +
-                ", isLiked=" + isLiked +
-                ", creationTime=" + creationTime +
-                '}';
-    }
 }

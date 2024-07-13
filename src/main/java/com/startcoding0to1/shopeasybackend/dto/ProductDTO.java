@@ -1,9 +1,6 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
-import com.startcoding0to1.shopeasybackend.entity.User;
-import jakarta.persistence.Column;
-
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Data Transfer Object (DTO) for Products.
@@ -12,6 +9,7 @@ import java.time.LocalDateTime;
  *
  * @author Mahammad Khairuddin
  */
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ProductDTO {
 	private String productId;
 
@@ -25,7 +23,7 @@ public class ProductDTO {
 
 	private double discountPrice;
 
-	private int quantity;
+	private Integer quantity;
 
 	private String prodAvailability;
 
@@ -39,15 +37,15 @@ public class ProductDTO {
 
 	private String productSize;
 
-	private int rating;
+	private Integer rating;
 
-	private User seller;
+	private Integer sellerId;
 
-	private int totalReviews;
+	private Integer totalReviews;
 
-	private LocalDateTime creationTime;
+	private String creationTime;
 
-	private LocalDateTime lastUpdateTime;
+	private String lastUpdateTime;
 
 	public String getProductId() {
 		return productId;
@@ -97,11 +95,11 @@ public class ProductDTO {
 		this.discountPrice = discountPrice;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
@@ -153,43 +151,44 @@ public class ProductDTO {
 		this.productSize = productSize;
 	}
 
-	public int getRating() {
+	public Integer getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
 
-	public int getTotalReviews() {
+	public Integer getTotalReviews() {
 		return totalReviews;
 	}
 
-	public void setTotalReviews(int totalReviews) {
+	public void setTotalReviews(Integer totalReviews) {
 		this.totalReviews = totalReviews;
 	}
 
-	public User getSeller() {
-		return seller;
+	public Integer getSellerId() {
+		return sellerId;
 	}
 
-	public void setSeller(User seller) {
-		this.seller = seller;
+	public void setSellerId(Integer sellerId) {
+		this.sellerId = sellerId;
 	}
 
-	public LocalDateTime getCreationTime() {
+	public String getCreationTime() {
 		return creationTime;
 	}
 
-	public void setCreationTime(LocalDateTime creationTime) {
+	public void setCreationTime(String creationTime) {
 		this.creationTime = creationTime;
 	}
 
-	public LocalDateTime getLastUpdateTime() {
+	public String getLastUpdateTime() {
 		return lastUpdateTime;
 	}
 
-	public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
+	public void setLastUpdateTime(String lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
 	}
+
 }

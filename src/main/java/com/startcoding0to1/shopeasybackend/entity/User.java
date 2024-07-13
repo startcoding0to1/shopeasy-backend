@@ -1,13 +1,10 @@
 package com.startcoding0to1.shopeasybackend.entity;
 
 import com.startcoding0to1.shopeasybackend.generator.UserIdGenerator;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -15,7 +12,6 @@ import java.util.Set;
 public  class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @Id
     @GenericGenerator(name="user_id_seq", type=UserIdGenerator.class)
     @GeneratedValue(generator = "user_id_seq")
@@ -51,6 +47,14 @@ public  class User implements Serializable {
 
     @Column(name = "last_update_time")
     private LocalDateTime lastUpdateTime;
+
+    @OneToOne(mappedBy = "user" ,cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private AdminDetails adminDetails;
+    @OneToOne(mappedBy = "user" ,cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private CustomerDetails customerDetails;
+
+    @OneToOne(mappedBy = "user" ,cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private SellerDetails sellerDetails;
 
     public String getUserId() {
         return userId;
@@ -124,31 +128,27 @@ public  class User implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(getUserId(), user.getUserId()) && Objects.equals(getUserFirstName(), user.getUserFirstName()) && Objects.equals(getUserLastName(), user.getUserLastName()) && Objects.equals(getPhoneNumber(), user.getPhoneNumber()) && Objects.equals(getUserEmail(), user.getUserEmail()) && Objects.equals(getUserPassword(), user.getUserPassword()) && Objects.equals(getRoles(), user.getRoles()) && Objects.equals(getCreationTime(), user.getCreationTime()) && Objects.equals(getLastUpdateTime(), user.getLastUpdateTime());
+    public AdminDetails getAdminDetails() {
+        return adminDetails;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUserId(), getUserFirstName(), getUserLastName(), getPhoneNumber(), getUserEmail(), getUserPassword(), getRoles(), getCreationTime(), getLastUpdateTime());
+    public void setAdminDetails(AdminDetails adminDetails) {
+        this.adminDetails = adminDetails;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId='" + userId + '\'' +
-                ", userFirstName='" + userFirstName + '\'' +
-                ", userLastName='" + userLastName + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", userEmail='" + userEmail + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", roles=" + roles +
-                ", creationTime=" + creationTime +
-                ", lastUpdateTime=" + lastUpdateTime +
-                '}';
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
+    }
+
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
+    }
+
+    public SellerDetails getSellerDetails() {
+        return sellerDetails;
+    }
+
+    public void setSellerDetails(SellerDetails sellerDetails) {
+        this.sellerDetails = sellerDetails;
     }
 }

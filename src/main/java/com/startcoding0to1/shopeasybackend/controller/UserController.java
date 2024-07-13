@@ -4,7 +4,6 @@ import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.AuthRequest;
 import com.startcoding0to1.shopeasybackend.dto.AuthResponse;
 import com.startcoding0to1.shopeasybackend.dto.UserDTO;
-import com.startcoding0to1.shopeasybackend.entity.User;
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/auth/register")
+    @PostMapping(value = "/auth/register",produces = "application/json")
     public ResponseEntity<AuthResponse> registerUser(@RequestBody UserDTO userDTO) throws ShopEasyException {
         if(userDTO==null){
             throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
