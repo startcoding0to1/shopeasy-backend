@@ -1,5 +1,8 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(value = JsonInclude.Include.ALWAYS)
 public class AuthRequest {
 
     private String userEmail;

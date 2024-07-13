@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Table(name = "cart")
@@ -16,11 +15,11 @@ public class Cart implements Serializable {
     @SequenceGenerator(name = "cart_id_seq" ,sequenceName = "cart_sequence", allocationSize = 1)
     @Column(name = "cart_id")
     private Integer cartId;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="product_id")
+    @ManyToOne
+    @JoinColumn(name = "customerDetails_id")
+    private CustomerDetails customerDetails;
+    @OneToOne
+    @JoinColumn(name = "product_id",nullable = false)
     private Product product;
     @Column(name = "quantity")
     private Integer quantity;
@@ -36,12 +35,12 @@ public class Cart implements Serializable {
         this.cartId = cartId;
     }
 
-    public User getUser() {
-        return user;
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
     }
 
     public Product getProduct() {
@@ -68,27 +67,4 @@ public class Cart implements Serializable {
         this.creationTime = creationTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cart cart = (Cart) o;
-        return Objects.equals(getCartId(), cart.getCartId()) && Objects.equals(getUser(), cart.getUser()) && Objects.equals(getProduct(), cart.getProduct()) && Objects.equals(getQuantity(), cart.getQuantity()) && Objects.equals(getCreationTime(), cart.getCreationTime());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getCartId(), getUser(), getProduct(), getQuantity(), getCreationTime());
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "cartId=" + cartId +
-                ", user=" + user +
-                ", product=" + product +
-                ", Quantity=" + quantity +
-                ", cretionTime=" + creationTime +
-                '}';
-    }
 }

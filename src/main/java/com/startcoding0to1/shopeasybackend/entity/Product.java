@@ -2,12 +2,10 @@ package com.startcoding0to1.shopeasybackend.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
-
+import java.util.Set;
 import com.startcoding0to1.shopeasybackend.generator.ProductIdGenerator;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.lang.NonNull;
 
 
 /**
@@ -45,7 +43,7 @@ public class Product implements Serializable {
 	private double discountPrice;
 
 	@Column(name = "quantity")
-	private int quantity;
+	private Integer quantity;
 
 	@Column(name = "prod_availability")
 	private String prodAvailability;
@@ -66,22 +64,22 @@ public class Product implements Serializable {
 	private String productSize;
 
 	@Column(name = "rating")
-	private int rating;
+	private Integer rating;
 
 	@Column(name = "total_reviews")
-	private int totalReviews;
+	private Integer totalReviews;
 
-	@NonNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "seller_id")
-	private User seller;
-
+	@ManyToOne
+	@JoinColumn(name = "seller_id",nullable = false)
+	private SellerDetails seller;
 	@Column(name = "creation_time")
 	private LocalDateTime creationTime;
-
 	@Column(name = "last_update_time")
 	private LocalDateTime lastUpdateTime;
-
+	@OneToOne(mappedBy = "product",cascade = CascadeType.REMOVE,orphanRemoval = true)
+	private Wishlist wishlist;
+	@OneToOne(mappedBy = "product",cascade = CascadeType.REMOVE,orphanRemoval = true)
+	private Cart cart;
 	public String getProductId() {
 		return productId;
 	}
@@ -130,11 +128,11 @@ public class Product implements Serializable {
 		this.discountPrice = discountPrice;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
@@ -153,7 +151,6 @@ public class Product implements Serializable {
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
 	}
-
 
 	public String getImageUrl() {
 		return imageUrl;
@@ -187,27 +184,27 @@ public class Product implements Serializable {
 		this.productSize = productSize;
 	}
 
-	public int getRating() {
+	public Integer getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
 
-	public int getTotalReviews() {
+	public Integer getTotalReviews() {
 		return totalReviews;
 	}
 
-	public void setTotalReviews(int totalReviews) {
+	public void setTotalReviews(Integer totalReviews) {
 		this.totalReviews = totalReviews;
 	}
 
-	public User getSeller() {
+	public SellerDetails getSeller() {
 		return seller;
 	}
 
-	public void setSeller(User seller) {
+	public void setSeller(SellerDetails seller) {
 		this.seller = seller;
 	}
 
@@ -227,40 +224,18 @@ public class Product implements Serializable {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Product product = (Product) o;
-		return Double.compare(product.getProdPrice(), getProdPrice()) == 0 && Double.compare(product.getDiscountPrice(), getDiscountPrice()) == 0 && getQuantity() == product.getQuantity() && getRating() == product.getRating() && getTotalReviews() == product.getTotalReviews() && Objects.equals(getProductId(), product.getProductId()) && Objects.equals(getProductName(), product.getProductName()) && Objects.equals(getProdCategory(), product.getProdCategory()) && Objects.equals(getProdSubCategory(), product.getProdSubCategory()) && Objects.equals(getProdAvailability(), product.getProdAvailability()) && Objects.equals(getProductDesc(), product.getProductDesc()) && Objects.equals(getImageUrl(), product.getImageUrl()) && Objects.equals(getVideoUrl(), product.getVideoUrl()) && Objects.equals(getBrand(), product.getBrand()) && Objects.equals(getProductSize(), product.getProductSize()) && getSeller().equals(product.getSeller()) && Objects.equals(getCreationTime(), product.getCreationTime()) && Objects.equals(getLastUpdateTime(), product.getLastUpdateTime());
+	public Wishlist getWishlist() {
+		return wishlist;
+	}
+	public void setWishlist(Wishlist wishlist) {
+		this.wishlist = wishlist;
+	}
+	public Cart getCart() {
+		return cart;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(getProductId(), getProductName(), getProdCategory(), getProdSubCategory(), getProdPrice(), getDiscountPrice(), getQuantity(), getProdAvailability(), getProductDesc(), getImageUrl(), getVideoUrl(), getBrand(), getProductSize(), getRating(), getTotalReviews(), getSeller(), getCreationTime(), getLastUpdateTime());
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
 
-	@Override
-	public String toString() {
-		return "Product{" +
-				"productId='" + productId + '\'' +
-				", productName='" + productName + '\'' +
-				", prodCategory='" + prodCategory + '\'' +
-				", prodSubCategory='" + prodSubCategory + '\'' +
-				", prodPrice=" + prodPrice +
-				", discountPrice=" + discountPrice +
-				", quantity=" + quantity +
-				", prodAvailability='" + prodAvailability + '\'' +
-				", productDesc='" + productDesc + '\'' +
-				", imageUrl='" + imageUrl + '\'' +
-				", videoUrl='" + videoUrl + '\'' +
-				", brand='" + brand + '\'' +
-				", productSize='" + productSize + '\'' +
-				", rating=" + rating +
-				", totalReviews=" + totalReviews +
-				", seller=" + seller +
-				", creationTime=" + creationTime +
-				", lastUpdateTime=" + lastUpdateTime +
-				'}';
-	}
 }

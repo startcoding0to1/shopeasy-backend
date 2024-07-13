@@ -2,13 +2,15 @@ package com.startcoding0to1.shopeasybackend.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "wishlist")
-public class Wishlist {
+public class Wishlist implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "wishlist_id_gen")
     @SequenceGenerator(name = "wishlist_id_gen" ,sequenceName = "wishlist_sequence",allocationSize = 1)
@@ -16,12 +18,12 @@ public class Wishlist {
     private Integer wishlistId;
 
     @OneToOne
-    @JoinColumn(name = "product_id",nullable = false)
-    private Product productId;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @ManyToOne
-    @JoinColumn(name="user_Id",nullable = false)
-    private User userId;
+    @JoinColumn(name="customerDetails_Id",nullable = false)
+    private CustomerDetails customerDetails;
 
     @Column(name = "is_liked")
     private boolean isLiked;
@@ -37,20 +39,20 @@ public class Wishlist {
         this.wishlistId = wishlistId;
     }
 
-    public Product getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Product productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public User getUserId() {
-        return userId;
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
     }
 
     public boolean isLiked() {
@@ -69,27 +71,4 @@ public class Wishlist {
         this.creationTime = creationTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Wishlist wishlist = (Wishlist) o;
-        return isLiked() == wishlist.isLiked() && Objects.equals(getWishlistId(), wishlist.getWishlistId()) && Objects.equals(getProductId(), wishlist.getProductId()) && Objects.equals(getUserId(), wishlist.getUserId()) && Objects.equals(getCreationTime(), wishlist.getCreationTime());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getWishlistId(), getProductId(), getUserId(), isLiked(), getCreationTime());
-    }
-
-    @Override
-    public String toString() {
-        return "Wishlist{" +
-                "wishlistId=" + wishlistId +
-                ", productId=" + productId +
-                ", userId=" + userId +
-                ", isLiked=" + isLiked +
-                ", creationTime=" + creationTime +
-                '}';
-    }
 }

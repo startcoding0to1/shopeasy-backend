@@ -1,10 +1,8 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
-import com.startcoding0to1.shopeasybackend.entity.Address;
-import com.startcoding0to1.shopeasybackend.entity.User;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.Objects;
-
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class AddressDTO {
 
     private Integer addressId;
@@ -14,8 +12,10 @@ public class AddressDTO {
     private Long pincode;
     private String city;
     private String state;
-    private User userId;
-
+    private String userId;
+    private Integer adminId;
+    private Integer sellerId;
+    private Integer customerId;
     public Integer getAddressId() {
         return addressId;
     }
@@ -72,38 +72,35 @@ public class AddressDTO {
         this.state = state;
     }
 
-    public User getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Objects.equals(getAddressId(), address.getAddressId()) && Objects.equals(getHouseNo(), address.getHouseNo()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getLandmark(), address.getLandmark()) && Objects.equals(getPincode(), address.getPincode()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getState(), address.getState()) && Objects.equals(getUserId(), address.getUserId());
+    public Integer getAdminId() {
+        return adminId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getAddressId(), getHouseNo(), getStreet(), getLandmark(), getPincode(), getCity(), getState(), getUserId());
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
     }
 
-    @Override
-    public String toString() {
-        return "Address{" +
-                "AddressId=" + addressId +
-                ", houseNo='" + houseNo + '\'' +
-                ", street='" + street + '\'' +
-                ", landmark='" + landmark + '\'' +
-                ", pincode=" + pincode +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", user=" + userId +
-                '}';
+    public Integer getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Integer sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 }

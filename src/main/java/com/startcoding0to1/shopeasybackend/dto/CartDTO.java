@@ -1,25 +1,14 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
-import com.startcoding0to1.shopeasybackend.entity.Cart;
-import com.startcoding0to1.shopeasybackend.entity.Product;
-import com.startcoding0to1.shopeasybackend.entity.User;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(value = JsonInclude.Include.NON_EMPTY)
 public class CartDTO {
     private Integer cartId;
-    private User user;
-    private Product product;
+    private Integer customerDetailsId;
+    private String productId;
     private Integer quantity;
-    private LocalDateTime creationTime;
-
-    public CartDTO(Integer cartId, User user, Product product, Integer quantity, LocalDateTime creationTime) {
-        this.cartId = cartId;
-        this.user = user;
-        this.product = product;
-        this.quantity = quantity;
-        this.creationTime = creationTime;
-    }
+    private String creationTime;
 
     public Integer getCartId() {
         return cartId;
@@ -29,20 +18,20 @@ public class CartDTO {
         this.cartId = cartId;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getCustomerDetailsId() {
+        return customerDetailsId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCustomerDetailsId(Integer customerDetailsId) {
+        this.customerDetailsId = customerDetailsId;
     }
 
-    public Product getProduct() {
-        return product;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public Integer getQuantity() {
@@ -53,35 +42,11 @@ public class CartDTO {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getCreationTime() {
+    public String getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(LocalDateTime creationTime) {
+    public void setCreationTime(String creationTime) {
         this.creationTime = creationTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cart cart = (Cart) o;
-        return Objects.equals(getCartId(), cart.getCartId()) && Objects.equals(getUser(), cart.getUser()) && Objects.equals(getProduct(), cart.getProduct()) && Objects.equals(getQuantity(), cart.getQuantity()) && Objects.equals(getCreationTime(), cart.getCreationTime());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getCartId(), getUser(), getProduct(), getQuantity(), getCreationTime());
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "cartId=" + cartId +
-                ", user=" + user +
-                ", product=" + product +
-                ", quantity=" + quantity +
-                ", cretionTime=" + creationTime +
-                '}';
     }
 }

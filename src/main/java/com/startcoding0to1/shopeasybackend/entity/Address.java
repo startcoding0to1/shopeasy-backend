@@ -1,11 +1,15 @@
 package com.startcoding0to1.shopeasybackend.entity;
 
+import com.startcoding0to1.shopeasybackend.dto.AddressDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
+@Table(name = "address")
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,9 +37,21 @@ public class Address implements Serializable {
     @Column(name = "state")
     private String state;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "admin_details_id")
+    private AdminDetails adminDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_details_id")
+    private CustomerDetails customerDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_details_id")
+    private SellerDetails sellerDetails;
 
     public Integer getAddressId() {
         return addressId;
@@ -93,38 +109,35 @@ public class Address implements Serializable {
         this.state = state;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Objects.equals(getAddressId(), address.getAddressId()) && Objects.equals(getHouseNo(), address.getHouseNo()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getLandmark(), address.getLandmark()) && Objects.equals(getPincode(), address.getPincode()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getState(), address.getState()) && Objects.equals(getUserId(), address.getUserId());
+    public AdminDetails getAdminDetails() {
+        return adminDetails;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getAddressId(), getHouseNo(), getStreet(), getLandmark(), getPincode(), getCity(), getState(), getUserId());
+    public void setAdminDetails(AdminDetails adminDetails) {
+        this.adminDetails = adminDetails;
     }
 
-    @Override
-    public String toString() {
-        return "Address{" +
-                "AddressId=" + addressId +
-                ", houseNo='" + houseNo + '\'' +
-                ", street='" + street + '\'' +
-                ", landmark='" + landmark + '\'' +
-                ", pincode=" + pincode +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", user=" + userId +
-                '}';
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
+    }
+
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
+    }
+
+    public SellerDetails getSellerDetails() {
+        return sellerDetails;
+    }
+
+    public void setSellerDetails(SellerDetails sellerDetails) {
+        this.sellerDetails = sellerDetails;
     }
 }
