@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -70,5 +71,30 @@ public class Wishlist implements Serializable {
     public void setCreationTime(LocalDateTime creationTime) {
         this.creationTime = creationTime;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(creationTime, customerDetails, isLiked, product, wishlistId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Wishlist other = (Wishlist) obj;
+		return Objects.equals(creationTime, other.creationTime)
+				&& Objects.equals(customerDetails, other.customerDetails) && isLiked == other.isLiked
+				&& Objects.equals(product, other.product) && Objects.equals(wishlistId, other.wishlistId);
+	}
+
+	@Override
+	public String toString() {
+		return "Wishlist [wishlistId=" + wishlistId + ", product=" + product + ", customerDetails=" + customerDetails
+				+ ", isLiked=" + isLiked + ", creationTime=" + creationTime + "]";
+	}
 
 }

@@ -7,20 +7,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import com.startcoding0to1.shopeasybackend.entity.Product;
-import com.startcoding0to1.shopeasybackend.entity.SellerDetails;
-import com.startcoding0to1.shopeasybackend.repository.SellerDetailsRepository;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.ProductDTO;
+import com.startcoding0to1.shopeasybackend.entity.Product;
+import com.startcoding0to1.shopeasybackend.entity.SellerDetails;
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.repository.ProductsRepository;
+import com.startcoding0to1.shopeasybackend.repository.SellerDetailsRepository;
 import com.startcoding0to1.shopeasybackend.service.ProductsService;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of the ProductsService interface for managing product-related operations.

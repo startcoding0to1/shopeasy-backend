@@ -3,9 +3,8 @@ package com.startcoding0to1.shopeasybackend.service;
 import java.util.List;
 import java.util.Set;
 
-import com.startcoding0to1.shopeasybackend.entity.Product;
-import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.dto.ProductDTO;
+import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 
 /**
  * Service interface for managing product-related operations.

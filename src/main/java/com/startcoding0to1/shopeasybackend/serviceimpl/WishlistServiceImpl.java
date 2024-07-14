@@ -1,5 +1,15 @@
 package com.startcoding0to1.shopeasybackend.serviceimpl;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.WishlistDTO;
 import com.startcoding0to1.shopeasybackend.entity.CustomerDetails;
@@ -10,15 +20,8 @@ import com.startcoding0to1.shopeasybackend.repository.CustomerDetailsRepository;
 import com.startcoding0to1.shopeasybackend.repository.ProductsRepository;
 import com.startcoding0to1.shopeasybackend.repository.WishlistRepository;
 import com.startcoding0to1.shopeasybackend.service.WishlistService;
-import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
@@ -33,7 +36,8 @@ public class WishlistServiceImpl implements WishlistService {
     @Autowired
     private ModelMapper MODELMAPPER;
 
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public Set<WishlistDTO> getAllWishlistItems(Integer customerDetailsId) throws ShopEasyException {
         Optional<CustomerDetails> optional = customerDetailsRepository.findById(customerDetailsId);
         CustomerDetails customerDetails = optional.orElseThrow(()->new ShopEasyException(ShopEasyConstants.NO_RECORDS_FOUND_FOR_GIVEN_CUSTOMER_DETAILS_ID+customerDetailsId,HttpStatus.NOT_FOUND));

@@ -1,19 +1,28 @@
 package com.startcoding0to1.shopeasybackend.serviceimpl;
 
-import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
-import com.startcoding0to1.shopeasybackend.dto.*;
-import com.startcoding0to1.shopeasybackend.entity.*;
-import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
-import com.startcoding0to1.shopeasybackend.repository.*;
-import com.startcoding0to1.shopeasybackend.service.UserService;
-import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+
+import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
+import com.startcoding0to1.shopeasybackend.dto.AuthRequest;
+import com.startcoding0to1.shopeasybackend.dto.AuthResponse;
+import com.startcoding0to1.shopeasybackend.dto.UserDTO;
+import com.startcoding0to1.shopeasybackend.entity.Role;
+import com.startcoding0to1.shopeasybackend.entity.User;
+import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
+import com.startcoding0to1.shopeasybackend.repository.UserRepository;
+import com.startcoding0to1.shopeasybackend.service.UserService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
@@ -21,12 +30,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private CustomerDetailsRepository customerDetailsRepository;
-    @Autowired
-    private SellerDetailsRepository sellerDetailsRepository;
-    @Autowired
-    private AdminDetailsRepository adminDetailsRepository;
     private static final DateTimeFormatter DATETIMEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @Autowired
     private ModelMapper MODELMAPPER;

@@ -1,5 +1,7 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
+import java.util.Objects;
+
 public class OrderDTO {
     private Integer orderId;
     private Integer customerId;
@@ -127,4 +129,39 @@ public class OrderDTO {
     public void setFeedBack(String feedBack) {
         this.feedBack = feedBack;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(customerId, deliverDate, deliverStatus, feedBack, lastUpdate, orderId, orderPlacedTime,
+				orderStatus, paymentStatus, pricePerProduct, productId, quantity, sellerId, totalPrice);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderDTO other = (OrderDTO) obj;
+		return Objects.equals(customerId, other.customerId) && Objects.equals(deliverDate, other.deliverDate)
+				&& Objects.equals(deliverStatus, other.deliverStatus) && Objects.equals(feedBack, other.feedBack)
+				&& Objects.equals(lastUpdate, other.lastUpdate) && Objects.equals(orderId, other.orderId)
+				&& Objects.equals(orderPlacedTime, other.orderPlacedTime)
+				&& Objects.equals(orderStatus, other.orderStatus) && Objects.equals(paymentStatus, other.paymentStatus)
+				&& Objects.equals(pricePerProduct, other.pricePerProduct) && Objects.equals(productId, other.productId)
+				&& Objects.equals(quantity, other.quantity) && Objects.equals(sellerId, other.sellerId)
+				&& Objects.equals(totalPrice, other.totalPrice);
+	}
+
+	@Override
+	public String toString() {
+		return "OrderDTO [orderId=" + orderId + ", customerId=" + customerId + ", productId=" + productId
+				+ ", sellerId=" + sellerId + ", pricePerProduct=" + pricePerProduct + ", quantity=" + quantity
+				+ ", totalPrice=" + totalPrice + ", orderStatus=" + orderStatus + ", deliverStatus=" + deliverStatus
+				+ ", deliverDate=" + deliverDate + ", paymentStatus=" + paymentStatus + ", orderPlacedTime="
+				+ orderPlacedTime + ", lastUpdate=" + lastUpdate + ", feedBack=" + feedBack + "]";
+	}
+    
 }

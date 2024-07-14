@@ -2,6 +2,7 @@ package com.startcoding0to1.shopeasybackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
 import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SellerDetailsDTO{
@@ -39,4 +40,30 @@ public class SellerDetailsDTO{
     public void setCompanyAddressesDTOs(Set<AddressDTO> companyAddressesDTOs) {
         this.companyAddressesDTOs = companyAddressesDTOs;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(companyAddressesDTOs, companyName, sellerId, userId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SellerDetailsDTO other = (SellerDetailsDTO) obj;
+		return Objects.equals(companyAddressesDTOs, other.companyAddressesDTOs)
+				&& Objects.equals(companyName, other.companyName) && Objects.equals(sellerId, other.sellerId)
+				&& Objects.equals(userId, other.userId);
+	}
+
+	@Override
+	public String toString() {
+		return "SellerDetailsDTO [sellerId=" + sellerId + ", userId=" + userId + ", companyName=" + companyName
+				+ ", companyAddressesDTOs=" + companyAddressesDTOs + "]";
+	}
+    
 }

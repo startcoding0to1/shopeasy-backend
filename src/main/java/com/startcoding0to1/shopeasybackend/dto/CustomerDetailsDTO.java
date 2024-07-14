@@ -2,6 +2,7 @@ package com.startcoding0to1.shopeasybackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
 import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CustomerDetailsDTO{
@@ -58,4 +59,32 @@ public class CustomerDetailsDTO{
     public void setDeliveryAddressesDTO(Set<AddressDTO> deliveryAddressesDTO) {
         this.deliveryAddressesDTO = deliveryAddressesDTO;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cartDTOS, customerId, deliveryAddressesDTO, premiumCustomer, userId, wishlistDTOS);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CustomerDetailsDTO other = (CustomerDetailsDTO) obj;
+		return Objects.equals(cartDTOS, other.cartDTOS) && Objects.equals(customerId, other.customerId)
+				&& Objects.equals(deliveryAddressesDTO, other.deliveryAddressesDTO)
+				&& Objects.equals(premiumCustomer, other.premiumCustomer) && Objects.equals(userId, other.userId)
+				&& Objects.equals(wishlistDTOS, other.wishlistDTOS);
+	}
+
+	@Override
+	public String toString() {
+		return "CustomerDetailsDTO [customerId=" + customerId + ", userId=" + userId + ", premiumCustomer="
+				+ premiumCustomer + ", wishlistDTOS=" + wishlistDTOS + ", cartDTOS=" + cartDTOS
+				+ ", deliveryAddressesDTO=" + deliveryAddressesDTO + "]";
+	}
+    
 }

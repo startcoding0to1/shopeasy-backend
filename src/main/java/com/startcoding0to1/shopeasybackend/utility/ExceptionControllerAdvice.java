@@ -1,20 +1,16 @@
 package com.startcoding0to1.shopeasybackend.utility;
-import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
-import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import java.time.LocalDateTime;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
+import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
+import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
-
-    @Autowired
-    private Environment environment;
 
     @ExceptionHandler(ShopEasyException.class)
     public ResponseEntity<ErrorInfo> shopEasyException(ShopEasyException shopEasyException){

@@ -2,6 +2,7 @@ package com.startcoding0to1.shopeasybackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
 import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class AdminDetailsDTO{
@@ -31,4 +32,27 @@ public class AdminDetailsDTO{
     public void setAddressDTOS(Set<AddressDTO> addressDTOS) {
         this.addressDTOS = addressDTOS;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(addressDTOS, adminId, userId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AdminDetailsDTO other = (AdminDetailsDTO) obj;
+		return Objects.equals(addressDTOS, other.addressDTOS) && Objects.equals(adminId, other.adminId)
+				&& Objects.equals(userId, other.userId);
+	}
+
+	@Override
+	public String toString() {
+		return "AdminDetailsDTO [adminId=" + adminId + ", userId=" + userId + ", addressDTOS=" + addressDTOS + "]";
+	}
 }

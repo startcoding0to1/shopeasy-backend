@@ -3,6 +3,7 @@ package com.startcoding0to1.shopeasybackend.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.startcoding0to1.shopeasybackend.entity.Role;
 
+import java.util.Objects;
 import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class UserDTO {
@@ -88,5 +89,33 @@ public class UserDTO {
         this.lastUpdateTime = lastUpdateTime;
     }
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(creationTime, lastUpdateTime, phoneNumber, roles, userEmail, userFirstName, userId,
+				userLastName, userPassword);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDTO other = (UserDTO) obj;
+		return Objects.equals(creationTime, other.creationTime) && Objects.equals(lastUpdateTime, other.lastUpdateTime)
+				&& Objects.equals(phoneNumber, other.phoneNumber) && Objects.equals(roles, other.roles)
+				&& Objects.equals(userEmail, other.userEmail) && Objects.equals(userFirstName, other.userFirstName)
+				&& Objects.equals(userId, other.userId) && Objects.equals(userLastName, other.userLastName)
+				&& Objects.equals(userPassword, other.userPassword);
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [userId=" + userId + ", userFirstName=" + userFirstName + ", userLastName=" + userLastName
+				+ ", phoneNumber=" + phoneNumber + ", userEmail=" + userEmail + ", userPassword=" + userPassword
+				+ ", roles=" + roles + ", creationTime=" + creationTime + ", lastUpdateTime=" + lastUpdateTime + "]";
+	}
 
 }

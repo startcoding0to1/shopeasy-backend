@@ -1,5 +1,7 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
@@ -49,4 +51,30 @@ public class CartDTO {
     public void setCreationTime(String creationTime) {
         this.creationTime = creationTime;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cartId, creationTime, customerDetailsId, productId, quantity);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CartDTO other = (CartDTO) obj;
+		return Objects.equals(cartId, other.cartId) && Objects.equals(creationTime, other.creationTime)
+				&& Objects.equals(customerDetailsId, other.customerDetailsId)
+				&& Objects.equals(productId, other.productId) && Objects.equals(quantity, other.quantity);
+	}
+
+	@Override
+	public String toString() {
+		return "CartDTO [cartId=" + cartId + ", customerDetailsId=" + customerDetailsId + ", productId=" + productId
+				+ ", quantity=" + quantity + ", creationTime=" + creationTime + "]";
+	}
+    
 }

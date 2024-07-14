@@ -1,5 +1,7 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
+import java.util.Objects;
+
 public class BankUserDetailsDTO {
 
     private Integer bankUserId;
@@ -101,4 +103,36 @@ public class BankUserDetailsDTO {
     public void setLastUpdateTime(String lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(account_number, balance, bankName, bankUserId, creationTime, emailId, firstName, ifScCode,
+				lastName, lastUpdateTime, phoneNumber);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BankUserDetailsDTO other = (BankUserDetailsDTO) obj;
+		return Objects.equals(account_number, other.account_number) && Objects.equals(balance, other.balance)
+				&& Objects.equals(bankName, other.bankName) && Objects.equals(bankUserId, other.bankUserId)
+				&& Objects.equals(creationTime, other.creationTime) && Objects.equals(emailId, other.emailId)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(ifScCode, other.ifScCode)
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(lastUpdateTime, other.lastUpdateTime)
+				&& Objects.equals(phoneNumber, other.phoneNumber);
+	}
+
+	@Override
+	public String toString() {
+		return "BankUserDetailsDTO [bankUserId=" + bankUserId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", account_number=" + account_number
+				+ ", bankName=" + bankName + ", ifScCode=" + ifScCode + ", balance=" + balance + ", creationTime="
+				+ creationTime + ", lastUpdateTime=" + lastUpdateTime + "]";
+	}
+    
 }

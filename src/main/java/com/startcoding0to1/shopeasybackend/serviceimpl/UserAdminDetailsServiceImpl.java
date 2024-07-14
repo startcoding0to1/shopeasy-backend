@@ -1,5 +1,13 @@
 package com.startcoding0to1.shopeasybackend.serviceimpl;
 
+import java.util.Iterator;
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.AdminDetailsDTO;
 import com.startcoding0to1.shopeasybackend.entity.AdminDetails;
@@ -9,13 +17,8 @@ import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.repository.AdminDetailsRepository;
 import com.startcoding0to1.shopeasybackend.service.UserDetailsService;
 import com.startcoding0to1.shopeasybackend.service.UserService;
+
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import java.util.Iterator;
-import java.util.Optional;
 
 @Service(value = "userAdminDetailsServiceImpl")
 @Transactional

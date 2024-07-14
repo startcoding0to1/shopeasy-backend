@@ -3,6 +3,7 @@ package com.startcoding0to1.shopeasybackend.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -45,4 +46,28 @@ public class AdminDetails implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(addresses, adminId, user);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AdminDetails other = (AdminDetails) obj;
+		return Objects.equals(addresses, other.addresses) && Objects.equals(adminId, other.adminId)
+				&& Objects.equals(user, other.user);
+	}
+
+	@Override
+	public String toString() {
+		return "AdminDetails [adminId=" + adminId + ", user=" + user + ", addresses=" + addresses + "]";
+	}
+    
 }

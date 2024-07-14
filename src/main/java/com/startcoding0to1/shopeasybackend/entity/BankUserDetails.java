@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "bank_User_details")
@@ -133,4 +134,36 @@ public class BankUserDetails implements Serializable {
     public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(account_number, balance, bankName, bankUserId, creationTime, emailId, firstName, ifScCode,
+				lastName, lastUpdateTime, phoneNumber);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BankUserDetails other = (BankUserDetails) obj;
+		return Objects.equals(account_number, other.account_number) && Objects.equals(balance, other.balance)
+				&& Objects.equals(bankName, other.bankName) && Objects.equals(bankUserId, other.bankUserId)
+				&& Objects.equals(creationTime, other.creationTime) && Objects.equals(emailId, other.emailId)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(ifScCode, other.ifScCode)
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(lastUpdateTime, other.lastUpdateTime)
+				&& Objects.equals(phoneNumber, other.phoneNumber);
+	}
+
+	@Override
+	public String toString() {
+		return "BankUserDetails [bankUserId=" + bankUserId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", account_number=" + account_number
+				+ ", bankName=" + bankName + ", ifScCode=" + ifScCode + ", balance=" + balance + ", creationTime="
+				+ creationTime + ", lastUpdateTime=" + lastUpdateTime + "]";
+	}
+    
 }

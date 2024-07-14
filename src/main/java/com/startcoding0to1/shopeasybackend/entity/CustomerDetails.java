@@ -4,6 +4,7 @@ package com.startcoding0to1.shopeasybackend.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -75,4 +76,31 @@ public class CustomerDetails implements Serializable {
     public void setCarts(Set<Cart> carts) {
         this.carts = carts;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(carts, customerId, deliveryAddresses, premiumCustomer, user, wishlists);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CustomerDetails other = (CustomerDetails) obj;
+		return Objects.equals(carts, other.carts) && Objects.equals(customerId, other.customerId)
+				&& Objects.equals(deliveryAddresses, other.deliveryAddresses)
+				&& Objects.equals(premiumCustomer, other.premiumCustomer) && Objects.equals(user, other.user)
+				&& Objects.equals(wishlists, other.wishlists);
+	}
+
+	@Override
+	public String toString() {
+		return "CustomerDetails [customerId=" + customerId + ", user=" + user + ", premiumCustomer=" + premiumCustomer
+				+ ", deliveryAddresses=" + deliveryAddresses + ", wishlists=" + wishlists + ", carts=" + carts + "]";
+	}
+    
 }

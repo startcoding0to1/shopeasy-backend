@@ -3,7 +3,8 @@
     import jakarta.persistence.*;
 
     import java.io.Serializable;
-    import java.util.Set;
+import java.util.Objects;
+import java.util.Set;
 
     @Entity
     @Table(name = "seller_details")
@@ -66,4 +67,30 @@
         public void setProducts(Set<Product> products) {
             this.products = products;
         }
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(companyAddresses, companyName, products, sellerId, user);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			SellerDetails other = (SellerDetails) obj;
+			return Objects.equals(companyAddresses, other.companyAddresses)
+					&& Objects.equals(companyName, other.companyName) && Objects.equals(products, other.products)
+					&& Objects.equals(sellerId, other.sellerId) && Objects.equals(user, other.user);
+		}
+
+		@Override
+		public String toString() {
+			return "SellerDetails [sellerId=" + sellerId + ", companyName=" + companyName + ", user=" + user
+					+ ", companyAddresses=" + companyAddresses + ", products=" + products + "]";
+		}
+        
     }

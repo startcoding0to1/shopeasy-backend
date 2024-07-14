@@ -1,5 +1,7 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -103,4 +105,36 @@ public class AddressDTO {
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(addressId, adminId, city, customerId, houseNo, landmark, pincode, sellerId, state, street,
+				userId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AddressDTO other = (AddressDTO) obj;
+		return Objects.equals(addressId, other.addressId) && Objects.equals(adminId, other.adminId)
+				&& Objects.equals(city, other.city) && Objects.equals(customerId, other.customerId)
+				&& Objects.equals(houseNo, other.houseNo) && Objects.equals(landmark, other.landmark)
+				&& Objects.equals(pincode, other.pincode) && Objects.equals(sellerId, other.sellerId)
+				&& Objects.equals(state, other.state) && Objects.equals(street, other.street)
+				&& Objects.equals(userId, other.userId);
+	}
+
+	@Override
+	public String toString() {
+		return "AddressDTO [addressId=" + addressId + ", houseNo=" + houseNo + ", street=" + street + ", landmark="
+				+ landmark + ", pincode=" + pincode + ", city=" + city + ", state=" + state + ", userId=" + userId
+				+ ", adminId=" + adminId + ", sellerId=" + sellerId + ", customerId=" + customerId + "]";
+	}
+    
+    
 }

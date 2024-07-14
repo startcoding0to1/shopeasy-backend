@@ -140,4 +140,36 @@ public class Address implements Serializable {
     public void setSellerDetails(SellerDetails sellerDetails) {
         this.sellerDetails = sellerDetails;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(addressId, adminDetails, city, customerDetails, houseNo, landmark, pincode, sellerDetails,
+				state, street, user);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Address other = (Address) obj;
+		return Objects.equals(addressId, other.addressId) && Objects.equals(adminDetails, other.adminDetails)
+				&& Objects.equals(city, other.city) && Objects.equals(customerDetails, other.customerDetails)
+				&& Objects.equals(houseNo, other.houseNo) && Objects.equals(landmark, other.landmark)
+				&& Objects.equals(pincode, other.pincode) && Objects.equals(sellerDetails, other.sellerDetails)
+				&& Objects.equals(state, other.state) && Objects.equals(street, other.street)
+				&& Objects.equals(user, other.user);
+	}
+
+	@Override
+	public String toString() {
+		return "Address [addressId=" + addressId + ", houseNo=" + houseNo + ", street=" + street + ", landmark="
+				+ landmark + ", pincode=" + pincode + ", city=" + city + ", state=" + state + ", user=" + user
+				+ ", adminDetails=" + adminDetails + ", customerDetails=" + customerDetails + ", sellerDetails="
+				+ sellerDetails + "]";
+	}
+    
 }

@@ -1,5 +1,7 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
@@ -191,4 +193,44 @@ public class ProductDTO {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(brand, creationTime, discountPrice, imageUrl, lastUpdateTime, prodAvailability,
+				prodCategory, prodPrice, prodSubCategory, productDesc, productId, productName, productSize, quantity,
+				rating, sellerId, totalReviews, videoUrl);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProductDTO other = (ProductDTO) obj;
+		return Objects.equals(brand, other.brand) && Objects.equals(creationTime, other.creationTime)
+				&& Double.doubleToLongBits(discountPrice) == Double.doubleToLongBits(other.discountPrice)
+				&& Objects.equals(imageUrl, other.imageUrl) && Objects.equals(lastUpdateTime, other.lastUpdateTime)
+				&& Objects.equals(prodAvailability, other.prodAvailability)
+				&& Objects.equals(prodCategory, other.prodCategory)
+				&& Double.doubleToLongBits(prodPrice) == Double.doubleToLongBits(other.prodPrice)
+				&& Objects.equals(prodSubCategory, other.prodSubCategory)
+				&& Objects.equals(productDesc, other.productDesc) && Objects.equals(productId, other.productId)
+				&& Objects.equals(productName, other.productName) && Objects.equals(productSize, other.productSize)
+				&& Objects.equals(quantity, other.quantity) && Objects.equals(rating, other.rating)
+				&& Objects.equals(sellerId, other.sellerId) && Objects.equals(totalReviews, other.totalReviews)
+				&& Objects.equals(videoUrl, other.videoUrl);
+	}
+
+	@Override
+	public String toString() {
+		return "ProductDTO [productId=" + productId + ", productName=" + productName + ", prodCategory=" + prodCategory
+				+ ", prodSubCategory=" + prodSubCategory + ", prodPrice=" + prodPrice + ", discountPrice="
+				+ discountPrice + ", quantity=" + quantity + ", prodAvailability=" + prodAvailability + ", productDesc="
+				+ productDesc + ", imageUrl=" + imageUrl + ", videoUrl=" + videoUrl + ", brand=" + brand
+				+ ", productSize=" + productSize + ", rating=" + rating + ", sellerId=" + sellerId + ", totalReviews="
+				+ totalReviews + ", creationTime=" + creationTime + ", lastUpdateTime=" + lastUpdateTime + "]";
+	}
+	
 }

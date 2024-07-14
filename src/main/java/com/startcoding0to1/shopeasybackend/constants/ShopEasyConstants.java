@@ -1,8 +1,5 @@
 package com.startcoding0to1.shopeasybackend.constants;
 
-
-import java.util.List;
-
 /**
  * This class contains constants used throughout the ShopEasy application.
  * @author Mahammad Khairuddin

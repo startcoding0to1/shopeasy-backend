@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "customer_order")
@@ -157,4 +158,39 @@ public class CustomerOrder implements Serializable {
     public void setFeedBack(String feedBack) {
         this.feedBack = feedBack;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(customerId, deliveryDate, deliveryStatus, feedBack, lastUpdate, orderId, orderPlacedTime,
+				orderStatus, paymentStatus, pricePerProduct, productId, quantity, sellerId, totalPrice);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CustomerOrder other = (CustomerOrder) obj;
+		return Objects.equals(customerId, other.customerId) && Objects.equals(deliveryDate, other.deliveryDate)
+				&& Objects.equals(deliveryStatus, other.deliveryStatus) && Objects.equals(feedBack, other.feedBack)
+				&& Objects.equals(lastUpdate, other.lastUpdate) && Objects.equals(orderId, other.orderId)
+				&& Objects.equals(orderPlacedTime, other.orderPlacedTime)
+				&& Objects.equals(orderStatus, other.orderStatus) && Objects.equals(paymentStatus, other.paymentStatus)
+				&& Objects.equals(pricePerProduct, other.pricePerProduct) && Objects.equals(productId, other.productId)
+				&& Objects.equals(quantity, other.quantity) && Objects.equals(sellerId, other.sellerId)
+				&& Objects.equals(totalPrice, other.totalPrice);
+	}
+
+	@Override
+	public String toString() {
+		return "CustomerOrder [orderId=" + orderId + ", customerId=" + customerId + ", productId=" + productId
+				+ ", sellerId=" + sellerId + ", pricePerProduct=" + pricePerProduct + ", quantity=" + quantity
+				+ ", totalPrice=" + totalPrice + ", orderStatus=" + orderStatus + ", deliveryStatus=" + deliveryStatus
+				+ ", deliveryDate=" + deliveryDate + ", paymentStatus=" + paymentStatus + ", orderPlacedTime="
+				+ orderPlacedTime + ", lastUpdate=" + lastUpdate + ", feedBack=" + feedBack + "]";
+	}
+    
 }

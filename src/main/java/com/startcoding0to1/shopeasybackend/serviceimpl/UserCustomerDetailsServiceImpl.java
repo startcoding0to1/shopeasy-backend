@@ -1,5 +1,14 @@
 package com.startcoding0to1.shopeasybackend.serviceimpl;
 
+import java.util.Iterator;
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.CustomerDetailsDTO;
 import com.startcoding0to1.shopeasybackend.entity.CustomerDetails;
@@ -12,27 +21,14 @@ import com.startcoding0to1.shopeasybackend.service.CartService;
 import com.startcoding0to1.shopeasybackend.service.UserDetailsService;
 import com.startcoding0to1.shopeasybackend.service.UserService;
 import com.startcoding0to1.shopeasybackend.service.WishlistService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.Iterator;
-import java.util.Optional;
 @Service(value = "userCustomerDetailsServiceImpl")
 @Transactional
 public class UserCustomerDetailsServiceImpl implements UserDetailsService<CustomerDetailsDTO> {
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private UserService userService;
     @Autowired
     private CustomerDetailsRepository customerDetailsRepository;
-    @Autowired
-    private CartService cartService;
-    @Autowired
-    private WishlistService wishlistService;
     @Autowired
     private ModelMapper MODELMAPPER;
     @Override

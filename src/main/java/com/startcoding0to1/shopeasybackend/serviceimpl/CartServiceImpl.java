@@ -1,5 +1,16 @@
 package com.startcoding0to1.shopeasybackend.serviceimpl;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.CartDTO;
 import com.startcoding0to1.shopeasybackend.entity.Cart;
@@ -10,15 +21,8 @@ import com.startcoding0to1.shopeasybackend.repository.CartRepository;
 import com.startcoding0to1.shopeasybackend.repository.CustomerDetailsRepository;
 import com.startcoding0to1.shopeasybackend.repository.ProductsRepository;
 import com.startcoding0to1.shopeasybackend.service.CartService;
-import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional

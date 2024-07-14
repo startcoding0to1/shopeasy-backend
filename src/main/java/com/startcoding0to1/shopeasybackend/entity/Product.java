@@ -2,6 +2,7 @@ package com.startcoding0to1.shopeasybackend.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import com.startcoding0to1.shopeasybackend.generator.ProductIdGenerator;
 import jakarta.persistence.*;
@@ -236,6 +237,48 @@ public class Product implements Serializable {
 
 	public void setCart(Cart cart) {
 		this.cart = cart;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(brand, cart, creationTime, discountPrice, imageUrl, lastUpdateTime, prodAvailability,
+				prodCategory, prodPrice, prodSubCategory, productDesc, productId, productName, productSize, quantity,
+				rating, seller, totalReviews, videoUrl, wishlist);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		return Objects.equals(brand, other.brand) && Objects.equals(cart, other.cart)
+				&& Objects.equals(creationTime, other.creationTime)
+				&& Double.doubleToLongBits(discountPrice) == Double.doubleToLongBits(other.discountPrice)
+				&& Objects.equals(imageUrl, other.imageUrl) && Objects.equals(lastUpdateTime, other.lastUpdateTime)
+				&& Objects.equals(prodAvailability, other.prodAvailability)
+				&& Objects.equals(prodCategory, other.prodCategory)
+				&& Double.doubleToLongBits(prodPrice) == Double.doubleToLongBits(other.prodPrice)
+				&& Objects.equals(prodSubCategory, other.prodSubCategory)
+				&& Objects.equals(productDesc, other.productDesc) && Objects.equals(productId, other.productId)
+				&& Objects.equals(productName, other.productName) && Objects.equals(productSize, other.productSize)
+				&& Objects.equals(quantity, other.quantity) && Objects.equals(rating, other.rating)
+				&& Objects.equals(seller, other.seller) && Objects.equals(totalReviews, other.totalReviews)
+				&& Objects.equals(videoUrl, other.videoUrl) && Objects.equals(wishlist, other.wishlist);
+	}
+
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", productName=" + productName + ", prodCategory=" + prodCategory
+				+ ", prodSubCategory=" + prodSubCategory + ", prodPrice=" + prodPrice + ", discountPrice="
+				+ discountPrice + ", quantity=" + quantity + ", prodAvailability=" + prodAvailability + ", productDesc="
+				+ productDesc + ", imageUrl=" + imageUrl + ", videoUrl=" + videoUrl + ", brand=" + brand
+				+ ", productSize=" + productSize + ", rating=" + rating + ", totalReviews=" + totalReviews + ", seller="
+				+ seller + ", creationTime=" + creationTime + ", lastUpdateTime=" + lastUpdateTime + ", wishlist="
+				+ wishlist + ", cart=" + cart + "]";
 	}
 
 }

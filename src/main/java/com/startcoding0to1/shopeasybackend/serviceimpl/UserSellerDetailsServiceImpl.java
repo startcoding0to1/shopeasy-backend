@@ -1,5 +1,14 @@
 package com.startcoding0to1.shopeasybackend.serviceimpl;
 
+import java.util.Iterator;
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.SellerDetailsDTO;
 import com.startcoding0to1.shopeasybackend.entity.Role;
@@ -7,17 +16,8 @@ import com.startcoding0to1.shopeasybackend.entity.SellerDetails;
 import com.startcoding0to1.shopeasybackend.entity.User;
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.repository.SellerDetailsRepository;
-import com.startcoding0to1.shopeasybackend.service.ProductsService;
 import com.startcoding0to1.shopeasybackend.service.UserDetailsService;
 import com.startcoding0to1.shopeasybackend.service.UserService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Iterator;
-import java.util.Optional;
 
 @Service(value = "userSellerDetailsServiceImpl")
 @Transactional
@@ -27,8 +27,6 @@ public class UserSellerDetailsServiceImpl implements UserDetailsService<SellerDe
     private UserService userService;
     @Autowired
     private SellerDetailsRepository sellerDetailsRepository;
-    @Autowired
-    private ProductsService productsService;
     @Autowired
     private ModelMapper MODELMAPPER;
     @Override

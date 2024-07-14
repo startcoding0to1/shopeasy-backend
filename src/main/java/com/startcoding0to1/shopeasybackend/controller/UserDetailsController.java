@@ -1,20 +1,27 @@
     package com.startcoding0to1.shopeasybackend.controller;
 
-    import com.fasterxml.jackson.databind.ObjectMapper;
-    import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
-    import com.startcoding0to1.shopeasybackend.dto.AdminDetailsDTO;
-    import com.startcoding0to1.shopeasybackend.dto.CustomerDetailsDTO;
-    import com.startcoding0to1.shopeasybackend.dto.SellerDetailsDTO;
-    import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
-    import com.startcoding0to1.shopeasybackend.service.UserDetailsService;
-    import com.startcoding0to1.shopeasybackend.serviceimpl.UserAdminDetailsServiceImpl;
-    import com.startcoding0to1.shopeasybackend.serviceimpl.UserCustomerDetailsServiceImpl;
-    import com.startcoding0to1.shopeasybackend.serviceimpl.UserSellerDetailsServiceImpl;
     import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.context.ApplicationContext;
-    import org.springframework.http.HttpStatus;
-    import org.springframework.http.ResponseEntity;
-    import org.springframework.web.bind.annotation.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
+import com.startcoding0to1.shopeasybackend.dto.AdminDetailsDTO;
+import com.startcoding0to1.shopeasybackend.dto.CustomerDetailsDTO;
+import com.startcoding0to1.shopeasybackend.dto.SellerDetailsDTO;
+import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
+import com.startcoding0to1.shopeasybackend.serviceimpl.UserAdminDetailsServiceImpl;
+import com.startcoding0to1.shopeasybackend.serviceimpl.UserCustomerDetailsServiceImpl;
+import com.startcoding0to1.shopeasybackend.serviceimpl.UserSellerDetailsServiceImpl;
 
     @RestController
     @RequestMapping(value = "/startcoding0to1/shopEasy")

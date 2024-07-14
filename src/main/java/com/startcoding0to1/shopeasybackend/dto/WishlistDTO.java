@@ -3,6 +3,7 @@ package com.startcoding0to1.shopeasybackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
 import java.util.Set;
 
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
@@ -53,4 +54,29 @@ public class WishlistDTO {
         this.creationTime = creationTime;
     }
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(creationTime, customerDetailsId, isLiked, productId, wishlistId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WishlistDTO other = (WishlistDTO) obj;
+		return Objects.equals(creationTime, other.creationTime)
+				&& Objects.equals(customerDetailsId, other.customerDetailsId) && isLiked == other.isLiked
+				&& Objects.equals(productId, other.productId) && Objects.equals(wishlistId, other.wishlistId);
+	}
+
+	@Override
+	public String toString() {
+		return "WishlistDTO [wishlistId=" + wishlistId + ", productId=" + productId + ", customerDetailsId="
+				+ customerDetailsId + ", isLiked=" + isLiked + ", creationTime=" + creationTime + "]";
+	}
+    
 }

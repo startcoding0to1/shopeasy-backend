@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "cart")
@@ -67,4 +68,29 @@ public class Cart implements Serializable {
         this.creationTime = creationTime;
     }
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(cartId, creationTime, customerDetails, product, quantity);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cart other = (Cart) obj;
+		return Objects.equals(cartId, other.cartId) && Objects.equals(creationTime, other.creationTime)
+				&& Objects.equals(customerDetails, other.customerDetails) && Objects.equals(product, other.product)
+				&& Objects.equals(quantity, other.quantity);
+	}
+
+	@Override
+	public String toString() {
+		return "Cart [cartId=" + cartId + ", customerDetails=" + customerDetails + ", product=" + product
+				+ ", quantity=" + quantity + ", creationTime=" + creationTime + "]";
+	}
+    
 }
