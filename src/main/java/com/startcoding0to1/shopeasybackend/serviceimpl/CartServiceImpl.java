@@ -3,6 +3,7 @@ package com.startcoding0to1.shopeasybackend.serviceimpl;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -36,10 +37,11 @@ public class CartServiceImpl implements CartService {
     private ProductsRepository productsRepository;
     private static final ModelMapper MODELMAPPER = new ModelMapper();
 
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public Set<CartDTO> getAllCartItems(Integer customerDetailsId) throws ShopEasyException {
         CustomerDetails customerDetails = getCustomerDetails(customerDetailsId);
-        Set<Cart> carts = cartRepository.findByCustomerDetails(customerDetails);
+        List<Cart> carts = cartRepository.findByCustomerDetails(customerDetails);
         Set<CartDTO> cartDTOS = new HashSet<CartDTO>();
         for (Cart cart:carts){
             CartDTO cartDTO = MODELMAPPER.map(cart,CartDTO.class);
@@ -56,9 +58,9 @@ public class CartServiceImpl implements CartService {
     public String addCartItem(CartDTO cartDTO) throws ShopEasyException {
         CustomerDetails customerDetails = getCustomerDetails(cartDTO.getCustomerDetailsId());
         Product products =  getProduct(cartDTO.getProductId());
-        Set<Cart> carts = cartRepository.findByProductAndCustomerDetails(products,customerDetails);
+        List<Cart> carts = cartRepository.findByProductAndCustomerDetails(products,customerDetails);
         if (!carts.isEmpty()){
-            throw new ShopEasyException(ShopEasyConstants.RECORD_ALREADY_EXIST+cartDTO.getCartId(),HttpStatus.CONFLICT);
+            throw new ShopEasyException(ShopEasyConstants.RECORD_ALREADY_EXIST+carts.get(0).getCartId(),HttpStatus.CONFLICT);
         }
         Cart cart = MODELMAPPER.map(cartDTO,Cart.class);
         cart.setCreationTime(LocalDateTime.now());

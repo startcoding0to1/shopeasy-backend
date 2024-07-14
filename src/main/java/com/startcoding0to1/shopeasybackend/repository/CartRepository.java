@@ -1,18 +1,18 @@
 package com.startcoding0to1.shopeasybackend.repository;
 
-import com.startcoding0to1.shopeasybackend.entity.Cart;
-import com.startcoding0to1.shopeasybackend.entity.CustomerDetails;
-import com.startcoding0to1.shopeasybackend.entity.Product;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-
-import java.util.Set;
+import com.startcoding0to1.shopeasybackend.entity.Cart;
+import com.startcoding0to1.shopeasybackend.entity.CustomerDetails;
+import com.startcoding0to1.shopeasybackend.entity.Product;
 
 public interface CartRepository extends CrudRepository<Cart, Integer> {
-    public Set<Cart> findByCustomerDetails(CustomerDetails customerDetails);
-    public Set<Cart> findByProductAndCustomerDetails(Product product, CustomerDetails customerDetails);
+    public List<Cart> findByCustomerDetails(CustomerDetails customerDetails);
+    public List<Cart> findByProductAndCustomerDetails(Product product, CustomerDetails customerDetails);
 
 
     @Modifying

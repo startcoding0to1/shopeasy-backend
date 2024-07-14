@@ -2,6 +2,7 @@ package com.startcoding0to1.shopeasybackend.serviceimpl;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class WishlistServiceImpl implements WishlistService {
     public Set<WishlistDTO> getAllWishlistItems(Integer customerDetailsId) throws ShopEasyException {
         Optional<CustomerDetails> optional = customerDetailsRepository.findById(customerDetailsId);
         CustomerDetails customerDetails = optional.orElseThrow(()->new ShopEasyException(ShopEasyConstants.NO_RECORDS_FOUND_FOR_GIVEN_CUSTOMER_DETAILS_ID+customerDetailsId,HttpStatus.NOT_FOUND));
-        Set<Wishlist> wishlists = wishlistRepository.findByCustomerDetails(customerDetails);
+        List<Wishlist> wishlists = wishlistRepository.findByCustomerDetails(customerDetails);
         Set<WishlistDTO>  wishlistDTOS = new HashSet<WishlistDTO>();
         for (Wishlist wishlist:wishlists){
             WishlistDTO wishlistDTO = MODELMAPPER.map(wishlist,WishlistDTO.class);
@@ -57,9 +58,9 @@ public class WishlistServiceImpl implements WishlistService {
     public String addWishlistitem(WishlistDTO wishlistDTO) throws ShopEasyException {
         CustomerDetails customerDetails = getCustomerDetails(wishlistDTO.getCustomerDetailsId());
         Product product =  getProduct(wishlistDTO.getProductId());
-        Set<Wishlist> wishlists = wishlistRepository.findByCustomerDetailsAndProduct(customerDetails,product);
+        List<Wishlist> wishlists = wishlistRepository.findByCustomerDetailsAndProduct(customerDetails,product);
         if (!wishlists.isEmpty()){
-            throw new ShopEasyException(ShopEasyConstants.RECORD_ALREADY_EXIST+wishlistDTO.getWishlistId(),HttpStatus.CONFLICT);
+            throw new ShopEasyException(ShopEasyConstants.RECORD_ALREADY_EXIST+wishlists.get(0).getWishlistId(),HttpStatus.CONFLICT);
         }
         Wishlist wishlist = MODELMAPPER.map(wishlistDTO,Wishlist.class);
         wishlist.setCreationTime(LocalDateTime.now());
