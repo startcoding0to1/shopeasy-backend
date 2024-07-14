@@ -3,13 +3,11 @@ package com.startcoding0to1.shopeasybackend.repository;
 import com.startcoding0to1.shopeasybackend.entity.Cart;
 import com.startcoding0to1.shopeasybackend.entity.CustomerDetails;
 import com.startcoding0to1.shopeasybackend.entity.Product;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
 import java.util.Set;
 
 public interface CartRepository extends CrudRepository<Cart, Integer> {
