@@ -1,0 +1,119 @@
+Products :
+-------
+Get   -- http://localhost:9090/startcoding0to1/shopEasy/products
+Get   -- http://localhost:9090/startcoding0to1/shopEasy/product/Prod_28
+Post  -- http://localhost:9090/startcoding0to1/shopEasy/product
+{
+  "productName": "Smartphone",
+  "prodCategory": "Electronics",
+  "prodSubCategory": "Mobile Phones",
+  "prodPrice": 599.99,
+  "discountPrice": 549.99,
+  "quantity": 100,
+  "prodAvailability": "In Stock",
+  "productDesc": "A high-quality smartphone with advanced features.",
+  "imageUrl": "https://example.com/product/image.jpg",
+  "videoUrl": "https://example.com/product/video.mp4",
+  "brand": "BrandX",
+  "productSize": "6 inches",
+  "rating": 4,
+  "totalReviews": 50,
+  "seller":{
+    "userId": "User_8",
+    }
+}
+Put   -- http://localhost:9090/startcoding0to1/shopEasy/product/Prod_32
+{
+    "productId": "Prod_32",
+    "productName": "Smartphone",
+    "prodCategory": "Electronics",
+    "prodSubCategory": "Mobile Phones",
+    "prodPrice": 599.99,
+    "discountPrice": 549.99,
+    "quantity": 100,
+    "prodAvailability": "In Stock",
+    "productDesc": "A high-quality smartphone with advanced features.",
+    "imageUrl": "https://example.com/product/image.jpg",
+    "videoUrl": "https://example.com/product/video.mp4",
+    "brand": "BrandX",
+    "productSize": "6 inches",
+    "rating": 4,
+    "seller": {
+        "userId": "User_8"
+    },
+    "totalReviews": 50
+}
+Delete -- http://localhost:9090/startcoding0to1/shopEasy/product/Prod_31
+
+Users :
+-------
+Get   -- http://localhost:9090/startcoding0to1/shopEasy/users
+Get   -- http://localhost:9090/startcoding0to1/shopEasy/user/User_10
+Post  -- http://localhost:9090/startcoding0to1/shopEasy/auth/register
+{
+    "userId": "U67890",
+    "userFirstName": "Jane",
+    "userLastName": "Smith",
+    "address": [
+        {
+            "addressId": 3,
+            "houseNo": "789",
+            "street": "Third St",
+            "landmark": "Near Mall",
+            "pincode": 789012,
+            "city": "Metropolis",
+            "state": "NY"
+        },
+        {
+            "addressId": 4,
+            "houseNo": "101",
+            "street": "Fourth St",
+            "landmark": "Near Hospital",
+            "pincode": 210987,
+            "city": "Gotham",
+            "state": "NJ"
+        }
+    ],
+    "phoneNumber": 9876543210,
+    "userEmail": "jane.smith@example.com",
+    "userPassword": "anotherSecurePassword456",
+    "roles": [
+        "ADMIN",
+        "CUSTOMER"
+    ]
+}
+
+Put   -- http://localhost:9090/startcoding0to1/shopEasy/user/User_8
+{
+    "userId": "User_8",
+    "userFirstName": "JanuBaby",
+    "userLastName": "Smith",
+    "address": [
+        {
+            "addressId": 55,
+            "houseNo": "789",
+            "street": "6th Cross",
+            "landmark": "Near Mall",
+            "pincode": 789012,
+            "city": "Metropolis",
+            "state": "NY"
+        },
+        {
+            "addressId": 56,
+            "houseNo": "101",
+            "street": "7 St",
+            "landmark": "Near Hospital",
+            "pincode": 210987,
+            "city": "Gotham",
+            "state": "NJ"
+        }
+    ],
+    "phoneNumber": 9876543250,
+    "userEmail": "janubaby@example.com",
+    "userPassword": "anotherSecurePassword456",
+    "roles": [
+        "CUSTOMER",
+        "ADMIN"
+    ]
+}
+Delete -- http://localhost:9090/startcoding0to1/shopEasy/user/User_9
