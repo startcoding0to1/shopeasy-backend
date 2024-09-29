@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/startcoding0to1/shopEasy")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class PaymentController {
 
     @GetMapping(value = "/bankUser/{bankId}")

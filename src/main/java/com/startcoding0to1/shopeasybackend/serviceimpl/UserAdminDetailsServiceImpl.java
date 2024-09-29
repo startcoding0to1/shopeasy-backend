@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.AdminDetailsDTO;
+import com.startcoding0to1.shopeasybackend.dto.SuccessResponse;
 import com.startcoding0to1.shopeasybackend.entity.AdminDetails;
 import com.startcoding0to1.shopeasybackend.entity.Role;
 import com.startcoding0to1.shopeasybackend.entity.User;
@@ -40,7 +41,7 @@ public class UserAdminDetailsServiceImpl implements UserDetailsService<AdminDeta
     }
 
     @Override
-    public String addUserDetails(AdminDetailsDTO userDetailsDto) throws ShopEasyException {
+    public SuccessResponse addUserDetails(AdminDetailsDTO userDetailsDto) throws ShopEasyException {
         AdminDetails adminDetails;
         Integer adminDetailsId=null;
         AdminDetailsDTO adminDetailsDTO = (AdminDetailsDTO)userDetailsDto;
@@ -62,7 +63,7 @@ public class UserAdminDetailsServiceImpl implements UserDetailsService<AdminDeta
         }else {
             throw new ShopEasyException(ShopEasyConstants.USER_ID_IS_REQUIRED_TO_ADD_ADMIN_DETAILS,HttpStatus.BAD_REQUEST);
         }
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED+adminDetailsId;
+        return new SuccessResponse(ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED,adminDetailsId.toString());
     }
 
     @Override

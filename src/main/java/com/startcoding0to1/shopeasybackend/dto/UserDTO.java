@@ -16,7 +16,8 @@ public class UserDTO {
     private Set<Role> roles;
     private String creationTime;
     private String lastUpdateTime;
-
+    private byte[] profilepic;
+    
     public String getUserId() {
         return userId;
     }
@@ -88,6 +89,14 @@ public class UserDTO {
     public void setLastUpdateTime(String lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+    
+	public byte[] getProfilepic() {
+		return profilepic;
+	}
+
+	public void setProfilepic(byte[] profilepic) {
+		this.profilepic = profilepic;
+	}
 
 	@Override
 	public int hashCode() {

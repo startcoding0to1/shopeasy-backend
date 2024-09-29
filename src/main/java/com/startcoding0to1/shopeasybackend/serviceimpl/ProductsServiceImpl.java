@@ -42,8 +42,13 @@ public class ProductsServiceImpl implements ProductsService {
 	private ModelMapper MODELMAPPER;
 
 	@Override
-	public List<ProductDTO> getAllProducts() throws ShopEasyException {
-		Iterable<Product> listproducts = productsRepository.findAll();
+	public List<ProductDTO> getAllProducts(String category) throws ShopEasyException {
+		Iterable<Product> listproducts;
+		if (!category.equals("all")) {
+			listproducts = productsRepository.findByProdCategory(category);
+		}else {
+			listproducts = productsRepository.findAll();
+		}
 		List<ProductDTO> listProductsDTO = new ArrayList<>();
 		listproducts.forEach(products -> {
 			ProductDTO productsDTO=MODELMAPPER.map(products,ProductDTO.class);

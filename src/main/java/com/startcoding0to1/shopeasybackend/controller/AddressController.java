@@ -13,6 +13,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/startcoding0to1/shopEasy")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class AddressController {
 
     @Autowired

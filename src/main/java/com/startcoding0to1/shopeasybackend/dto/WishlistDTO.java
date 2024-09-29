@@ -1,10 +1,9 @@
 package com.startcoding0to1.shopeasybackend.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.Objects;
-import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
 public class WishlistDTO {

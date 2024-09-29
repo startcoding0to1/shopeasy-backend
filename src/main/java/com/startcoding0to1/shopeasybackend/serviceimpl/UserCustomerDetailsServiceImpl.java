@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.CustomerDetailsDTO;
+import com.startcoding0to1.shopeasybackend.dto.SuccessResponse;
 import com.startcoding0to1.shopeasybackend.entity.CustomerDetails;
 import com.startcoding0to1.shopeasybackend.entity.Role;
 import com.startcoding0to1.shopeasybackend.entity.User;
@@ -40,7 +41,7 @@ public class UserCustomerDetailsServiceImpl implements UserDetailsService<Custom
     }
 
     @Override
-    public String addUserDetails(CustomerDetailsDTO userDetailsDto) throws ShopEasyException {
+    public SuccessResponse addUserDetails(CustomerDetailsDTO userDetailsDto) throws ShopEasyException {
         CustomerDetails customerDetails;
         Integer customerDetailsId=null;
         CustomerDetailsDTO customerDetailsDTO = userDetailsDto;
@@ -62,7 +63,7 @@ public class UserCustomerDetailsServiceImpl implements UserDetailsService<Custom
         }else {
             throw new ShopEasyException(ShopEasyConstants.USER_ID_IS_REQUIRED_TO_ADD_CUSTOMER_DETAILS,HttpStatus.BAD_REQUEST);
         }
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED+customerDetailsId;
+        return new SuccessResponse(ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED,customerDetailsId.toString());
     }
 
     @Override

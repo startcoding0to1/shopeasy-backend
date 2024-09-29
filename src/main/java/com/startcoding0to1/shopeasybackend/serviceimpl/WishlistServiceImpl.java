@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
+import com.startcoding0to1.shopeasybackend.dto.SuccessResponse;
 import com.startcoding0to1.shopeasybackend.dto.WishlistDTO;
 import com.startcoding0to1.shopeasybackend.entity.CustomerDetails;
 import com.startcoding0to1.shopeasybackend.entity.Product;
@@ -55,7 +56,7 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public String addWishlistitem(WishlistDTO wishlistDTO) throws ShopEasyException {
+    public SuccessResponse addWishlistitem(WishlistDTO wishlistDTO) throws ShopEasyException {
         CustomerDetails customerDetails = getCustomerDetails(wishlistDTO.getCustomerDetailsId());
         Product product =  getProduct(wishlistDTO.getProductId());
         List<Wishlist> wishlists = wishlistRepository.findByCustomerDetailsAndProduct(customerDetails,product);
@@ -65,15 +66,15 @@ public class WishlistServiceImpl implements WishlistService {
         Wishlist wishlist = MODELMAPPER.map(wishlistDTO,Wishlist.class);
         wishlist.setCreationTime(LocalDateTime.now());
         wishlist=wishlistRepository.save(wishlist);
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED+wishlist.getWishlistId();
+        return new SuccessResponse(wishlist.getWishlistId().toString(),ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED+wishlist.getWishlistId());
     }
 
     @Override
-    public String deleteWishlistitem(Integer wishlistId) throws ShopEasyException {
+    public SuccessResponse deleteWishlistitem(Integer wishlistId) throws ShopEasyException {
         Optional<Wishlist> optional = wishlistRepository.findById(wishlistId);
         Wishlist wishlist = optional.orElseThrow(()->new ShopEasyException(ShopEasyConstants.NO_RECORDS_FOUND_FOR_GIVEN_WISHLIST_ID+wishlistId,HttpStatus.NOT_FOUND));
         wishlistRepository.deleteByWishlistId(wishlistId);
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_DELETED+wishlist.getWishlistId();
+        return new SuccessResponse(wishlist.getWishlistId().toString(),ShopEasyConstants.RECORD_SUCCESSFULLY_DELETED+wishlist.getWishlistId());
     }
 
     private CustomerDetails getCustomerDetails(Integer customerDetailsId) throws ShopEasyException {

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.CartDTO;
+import com.startcoding0to1.shopeasybackend.dto.SuccessResponse;
 import com.startcoding0to1.shopeasybackend.entity.Cart;
 import com.startcoding0to1.shopeasybackend.entity.CustomerDetails;
 import com.startcoding0to1.shopeasybackend.entity.Product;
@@ -55,7 +56,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public String addCartItem(CartDTO cartDTO) throws ShopEasyException {
+    public SuccessResponse addCartItem(CartDTO cartDTO) throws ShopEasyException {
         CustomerDetails customerDetails = getCustomerDetails(cartDTO.getCustomerDetailsId());
         Product products =  getProduct(cartDTO.getProductId());
         List<Cart> carts = cartRepository.findByProductAndCustomerDetails(products,customerDetails);
@@ -65,11 +66,11 @@ public class CartServiceImpl implements CartService {
         Cart cart = MODELMAPPER.map(cartDTO,Cart.class);
         cart.setCreationTime(LocalDateTime.now());
         cart = cartRepository.save(cart);
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED+cart.getCartId();
+        return new SuccessResponse(cart.getCartId().toString(),ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED+cart.getCartId());
     }
 
     @Override
-    public String updateCartItem(Integer cartId, CartDTO cartDTO) throws ShopEasyException {
+    public SuccessResponse updateCartItem(Integer cartId, CartDTO cartDTO) throws ShopEasyException {
         Cart cart = getCart(cartId);
 
         if (cartDTO.getQuantity() != null) {
@@ -88,15 +89,15 @@ public class CartServiceImpl implements CartService {
         cart.setCreationTime(LocalDateTime.now());
         cartRepository.save(cart);
 
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_UPDATED + cartId;
+        return new SuccessResponse(cartId.toString(),ShopEasyConstants.RECORD_SUCCESSFULLY_UPDATED + cartId);
     }
 
 
     @Override
-    public String deleteCartItem(Integer cartId) throws ShopEasyException {
+    public SuccessResponse deleteCartItem(Integer cartId) throws ShopEasyException {
         Cart cart = getCart(cartId);
         cartRepository.deleteByCartId(cart.getCartId());
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_DELETED+cartId;
+        return new SuccessResponse(cartId.toString(),ShopEasyConstants.RECORD_SUCCESSFULLY_DELETED+cartId);
     }
 
     private Cart getCart(Integer cartId) throws ShopEasyException {

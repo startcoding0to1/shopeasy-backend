@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
-import com.startcoding0to1.shopeasybackend.dto.OrderDTO;
+import com.startcoding0to1.shopeasybackend.dto.CustomerOrderDTO;
 import com.startcoding0to1.shopeasybackend.entity.CustomerOrder;
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.repository.OrderRepository;
@@ -31,11 +31,11 @@ public class OrderServiceImpl implements OrderService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public List<OrderDTO> getOrdersByCustomerId(Integer customerId) throws ShopEasyException {
+    public List<CustomerOrderDTO> getOrdersByCustomerId(Integer customerId) throws ShopEasyException {
         Iterable<CustomerOrder> customerOrders = orderRepository.findAll();
-        List<OrderDTO> orderDTOS = new ArrayList<>();
+        List<CustomerOrderDTO> orderDTOS = new ArrayList<>();
         customerOrders.forEach(order -> {
-            OrderDTO orderDTO = MODELMAPPER.map(order, OrderDTO.class);
+            CustomerOrderDTO orderDTO = MODELMAPPER.map(order, CustomerOrderDTO.class);
             orderDTOS.add(orderDTO);
         });
         if(orderDTOS == null || orderDTOS.isEmpty()){
@@ -45,14 +45,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public String placeOrder(OrderDTO orderDTO) {
+    public String placeOrder(CustomerOrderDTO orderDTO) {
         CustomerOrder order = MODELMAPPER.map(orderDTO, CustomerOrder.class);
         order.setOrderStatus(ShopEasyConstants.ORDER_STATUS_ORDERED);
         if(orderDTO.getPaymentStatus().equals(null)){
             order.setPaymentStatus(ShopEasyConstants.PAYMENT_STATUS_NOT_YET_INITIATED);
         }
         order.setDeliveryStatus(ShopEasyConstants.Delivery_STATUS_In_PROGRESS);
-        return ShopEasyConstants.ORDER_SUCCESSFULLY_PLACED+orderRepository.save(order).getCustomerId()+".";
+        Integer id = orderRepository.save(order).getCustomerId();
+        return ShopEasyConstants.ORDER_SUCCESSFULLY_PLACED+id+".";
 
     }
 
@@ -87,4 +88,5 @@ public class OrderServiceImpl implements OrderService {
         order.setPaymentStatus(ShopEasyConstants.PAYMENT_STATUS_Failure);
         return ShopEasyConstants.ORDER_SUCCESSFULLY_CANCELLED+orderRepository.save(order).getOrderId()+".";
     }
+    
 }

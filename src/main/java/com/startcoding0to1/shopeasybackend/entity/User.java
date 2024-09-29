@@ -51,11 +51,15 @@ public  class User implements Serializable {
 
     @OneToOne(mappedBy = "user" ,cascade = CascadeType.REMOVE, orphanRemoval = true)
     private AdminDetails adminDetails;
+    
     @OneToOne(mappedBy = "user" ,cascade = CascadeType.REMOVE, orphanRemoval = true)
     private CustomerDetails customerDetails;
 
     @OneToOne(mappedBy = "user" ,cascade = CascadeType.REMOVE, orphanRemoval = true)
     private SellerDetails sellerDetails;
+    
+    @Column(name="profile_image")
+    private byte[] profilepic;
 
     public String getUserId() {
         return userId;
@@ -152,6 +156,18 @@ public  class User implements Serializable {
     public void setSellerDetails(SellerDetails sellerDetails) {
         this.sellerDetails = sellerDetails;
     }
+
+	public byte[] getProfilepic() {
+		return profilepic;
+	}
+
+	public void setProfilepic(byte[] profilepic) {
+		this.profilepic = profilepic;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	@Override
 	public int hashCode() {

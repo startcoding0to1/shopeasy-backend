@@ -21,13 +21,7 @@ public class CustomerOrder implements Serializable {
     @Column(name="customer_id")
     private Integer customerId;
     @Column(name="product_id")
-    private String productId;
-    @Column(name="seller_id")
-    private Integer sellerId;
-    @Column(name = "price_per_product")
-    private Double pricePerProduct;
-    @Column(name = "quantity")
-    private Integer quantity;
+    private String productIds;
     @Column(name="total_price")
     private Double totalPrice;
     @Column(name="order_status")
@@ -38,6 +32,8 @@ public class CustomerOrder implements Serializable {
     private LocalDateTime deliveryDate;
     @Column(name = "payment_status")
     private String paymentStatus; //Not yet initiated / success / failure
+    @Column(name ="address")
+    private String address;
     @CreationTimestamp
     @Column(name = "order_placed_time")
     private LocalDateTime orderPlacedTime;
@@ -64,35 +60,11 @@ public class CustomerOrder implements Serializable {
     }
 
     public String getProductId() {
-        return productId;
+        return productIds;
     }
 
     public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public Integer getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(Integer sellerId) {
-        this.sellerId = sellerId;
-    }
-
-    public Double getPricePerProduct() {
-        return pricePerProduct;
-    }
-
-    public void setPricePerProduct(Double pricePerProduct) {
-        this.pricePerProduct = pricePerProduct;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+        this.productIds = productId;
     }
 
     public Double getTotalPrice() {
@@ -134,8 +106,16 @@ public class CustomerOrder implements Serializable {
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
+    
+    public String getAddress() {
+		return address;
+	}
 
-    public LocalDateTime getOrderPlacedTime() {
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public LocalDateTime getOrderPlacedTime() {
         return orderPlacedTime;
     }
 
@@ -161,8 +141,8 @@ public class CustomerOrder implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerId, deliveryDate, deliveryStatus, feedBack, lastUpdate, orderId, orderPlacedTime,
-				orderStatus, paymentStatus, pricePerProduct, productId, quantity, sellerId, totalPrice);
+		return Objects.hash(address, customerId, deliveryDate, deliveryStatus, feedBack, lastUpdate, orderId,
+				orderPlacedTime, orderStatus, paymentStatus, productIds,totalPrice);
 	}
 
 	@Override
@@ -174,23 +154,25 @@ public class CustomerOrder implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		CustomerOrder other = (CustomerOrder) obj;
-		return Objects.equals(customerId, other.customerId) && Objects.equals(deliveryDate, other.deliveryDate)
+		return Objects.equals(address, other.address) && Objects.equals(customerId, other.customerId)
+				&& Objects.equals(deliveryDate, other.deliveryDate)
 				&& Objects.equals(deliveryStatus, other.deliveryStatus) && Objects.equals(feedBack, other.feedBack)
 				&& Objects.equals(lastUpdate, other.lastUpdate) && Objects.equals(orderId, other.orderId)
 				&& Objects.equals(orderPlacedTime, other.orderPlacedTime)
 				&& Objects.equals(orderStatus, other.orderStatus) && Objects.equals(paymentStatus, other.paymentStatus)
-				&& Objects.equals(pricePerProduct, other.pricePerProduct) && Objects.equals(productId, other.productId)
-				&& Objects.equals(quantity, other.quantity) && Objects.equals(sellerId, other.sellerId)
+				&& Objects.equals(productIds, other.productIds)
 				&& Objects.equals(totalPrice, other.totalPrice);
 	}
 
 	@Override
 	public String toString() {
-		return "CustomerOrder [orderId=" + orderId + ", customerId=" + customerId + ", productId=" + productId
-				+ ", sellerId=" + sellerId + ", pricePerProduct=" + pricePerProduct + ", quantity=" + quantity
-				+ ", totalPrice=" + totalPrice + ", orderStatus=" + orderStatus + ", deliveryStatus=" + deliveryStatus
-				+ ", deliveryDate=" + deliveryDate + ", paymentStatus=" + paymentStatus + ", orderPlacedTime="
-				+ orderPlacedTime + ", lastUpdate=" + lastUpdate + ", feedBack=" + feedBack + "]";
+		return "CustomerOrder [orderId=" + orderId + ", customerId=" + customerId + ", productId=" + productIds
+				+", totalPrice=" + totalPrice + ", orderStatus=" + orderStatus + ", deliveryStatus=" + deliveryStatus
+				+ ", deliveryDate=" + deliveryDate + ", paymentStatus=" + paymentStatus + ", address=" + address
+				+ ", orderPlacedTime=" + orderPlacedTime + ", lastUpdate=" + lastUpdate + ", feedBack=" + feedBack
+				+ "]";
 	}
+
+	
     
 }

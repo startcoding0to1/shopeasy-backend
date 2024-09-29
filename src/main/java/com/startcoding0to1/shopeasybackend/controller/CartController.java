@@ -2,6 +2,7 @@ package com.startcoding0to1.shopeasybackend.controller;
 
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.CartDTO;
+import com.startcoding0to1.shopeasybackend.dto.SuccessResponse;
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
 import com.startcoding0to1.shopeasybackend.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/startcoding0to1/shopEasy")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class CartController {
 
     @Autowired
@@ -27,27 +29,27 @@ public class CartController {
     }
 
     @PostMapping(value = "/cartItem")
-    public ResponseEntity<String> addCartItem(@RequestBody CartDTO cartDTO) throws ShopEasyException {
+    public ResponseEntity<SuccessResponse> addCartItem(@RequestBody CartDTO cartDTO) throws ShopEasyException {
         if(cartDTO == null || cartDTO.getCustomerDetailsId()==null){
             throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY, HttpStatus.BAD_REQUEST);
         }
-        String meassage = cartService.addCartItem(cartDTO);
+        SuccessResponse meassage = cartService.addCartItem(cartDTO);
         return new ResponseEntity<>(meassage,HttpStatus.CREATED);
     }
     @PutMapping(value = "/cartItem/{id}")
-    public ResponseEntity<String> updateCartItem(@PathVariable(name = "id") Integer cartId,@RequestBody CartDTO cartDTO) throws ShopEasyException {
+    public ResponseEntity<SuccessResponse> updateCartItem(@PathVariable(name = "id") Integer cartId,@RequestBody CartDTO cartDTO) throws ShopEasyException {
         if(cartId == null || cartDTO == null){
             throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY, HttpStatus.BAD_REQUEST);
         }
-        String meassage = cartService.updateCartItem(cartId,cartDTO);
+        SuccessResponse meassage = cartService.updateCartItem(cartId,cartDTO);
         return new ResponseEntity<>(meassage,HttpStatus.OK);
     }
     @DeleteMapping(value = "/cartItem/{id}")
-    public ResponseEntity<String> deleteCartItem(@PathVariable(name = "id") Integer cartId) throws ShopEasyException {
+    public ResponseEntity<SuccessResponse> deleteCartItem(@PathVariable(name = "id") Integer cartId) throws ShopEasyException {
         if(cartId == null){
             throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY, HttpStatus.BAD_REQUEST);
         }
-        String meassage = cartService.deleteCartItem(cartId);
+        SuccessResponse meassage = cartService.deleteCartItem(cartId);
         return new ResponseEntity<>(meassage,HttpStatus.OK);
     }
 }

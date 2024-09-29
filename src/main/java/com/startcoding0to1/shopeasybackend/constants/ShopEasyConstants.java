@@ -52,4 +52,6 @@ public class ShopEasyConstants {
 	public static final String Delivery_STATUS_In_PROGRESS = "In progress";
 	public static final String Delivery_STATUS_DELIVERED = "Delivered";
 	public static final String Delivery_STATUS_CANCELLED = "Cancelled";
+	public static final String USER_TYPE_IS_REQUIRED = "User type is required...";
+	public static final String SUCCESSFULLY_FETCHED = "Successfully fetched Id: ";
 }

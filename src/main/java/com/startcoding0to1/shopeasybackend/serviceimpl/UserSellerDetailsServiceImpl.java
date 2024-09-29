@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.SellerDetailsDTO;
+import com.startcoding0to1.shopeasybackend.dto.SuccessResponse;
 import com.startcoding0to1.shopeasybackend.entity.Role;
 import com.startcoding0to1.shopeasybackend.entity.SellerDetails;
 import com.startcoding0to1.shopeasybackend.entity.User;
@@ -38,9 +39,9 @@ public class UserSellerDetailsServiceImpl implements UserDetailsService<SellerDe
     }
 
     @Override
-    public String addUserDetails(SellerDetailsDTO userDetailsDto) throws ShopEasyException {
+    public SuccessResponse addUserDetails(SellerDetailsDTO userDetailsDto) throws ShopEasyException {
         SellerDetails sellerDetails;
-        Integer customerDetailsId=null;
+        Integer sellerDetailsId=0;
         SellerDetailsDTO sellerDetailsDTO = (SellerDetailsDTO)userDetailsDto;
         if(sellerDetailsDTO!=null && sellerDetailsDTO.getUserId() != null && !sellerDetailsDTO.getUserId().isEmpty()){
             User user =  MODELMAPPER.map(userService.getUser(userDetailsDto.getUserId()),User.class);
@@ -55,12 +56,12 @@ public class UserSellerDetailsServiceImpl implements UserDetailsService<SellerDe
                 throw new ShopEasyException(ShopEasyConstants.YOU_DONT_HAVE_ROLE_SELLER_TO_ADD_SELLER_DEATAILS,HttpStatus.BAD_REQUEST);
             }else{
                 sellerDetails = MODELMAPPER.map(sellerDetailsDTO,SellerDetails.class);
-                customerDetailsId = sellerDetailsRepository.save(sellerDetails).getSellerId();
+                sellerDetailsId = sellerDetailsRepository.save(sellerDetails).getSellerId();
             }
         }else {
             throw new ShopEasyException(ShopEasyConstants.USER_ID_IS_REQUIRED_TO_ADD_SELLER_DETAILS,HttpStatus.BAD_REQUEST);
         }
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED+customerDetailsId;
+        return new SuccessResponse(ShopEasyConstants.RECORD_SUCCESSFULLY_ADDED,sellerDetailsId.toString());
     }
 
     @Override

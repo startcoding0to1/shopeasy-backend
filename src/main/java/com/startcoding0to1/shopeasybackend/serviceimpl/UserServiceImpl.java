@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import com.startcoding0to1.shopeasybackend.dto.AuthRequest;
 import com.startcoding0to1.shopeasybackend.dto.AuthResponse;
+import com.startcoding0to1.shopeasybackend.dto.SuccessResponse;
 import com.startcoding0to1.shopeasybackend.dto.UserDTO;
 import com.startcoding0to1.shopeasybackend.entity.Role;
 import com.startcoding0to1.shopeasybackend.entity.User;
@@ -56,7 +57,13 @@ public class UserServiceImpl implements UserService {
         return authResponse;
     }
 
-
+	@Override
+	public SuccessResponse uploadImg(String userId,byte[] profileImg) throws ShopEasyException {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setProfilepic(profileImg);
+		return updateUser(userId,userDTO);
+	}
+    
     @Override
     public AuthResponse authentication(AuthRequest authRequest) throws ShopEasyException {
         Optional<User> optional=userRepository.findByUserEmail(authRequest.getUserEmail());
@@ -72,7 +79,8 @@ public class UserServiceImpl implements UserService {
         return authResponse;
     }
 
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public List<UserDTO> getAllUsers() throws ShopEasyException {
         Iterable<User> iterable = userRepository.findAll();
         List<UserDTO> userDTOS=new ArrayList<UserDTO>();
@@ -94,27 +102,36 @@ public class UserServiceImpl implements UserService {
         return userDTO;
     }
     @Override
-    public String updateUser(String userId, UserDTO userDTO) throws ShopEasyException {
+    public SuccessResponse updateUser(String userId, UserDTO userDTO) throws ShopEasyException {
         Optional<User> optional=userRepository.findById(userId);
         User user=optional.orElseThrow(() -> new ShopEasyException(ShopEasyConstants.NO_RECORDS_FOUND_FOR_GIVEN_USER_ID+userId,HttpStatus.NOT_FOUND));
-        user.setUserFirstName(userDTO.getUserFirstName()!=null?userDTO.getUserFirstName():user.getUserFirstName());
-        user.setUserLastName(userDTO.getUserLastName()!=null?userDTO.getUserLastName():user.getUserLastName());
-        user.setUserEmail(userDTO.getUserEmail()!=null?userDTO.getUserEmail():user.getUserEmail());
-        user.setRoles(userDTO.getRoles()!=null?userDTO.getRoles():user.getRoles());
-        user.setUserPassword(userDTO.getUserPassword()!=null?userDTO.getUserPassword():user.getUserPassword());
-        user.setPhoneNumber(userDTO.getPhoneNumber()!=null?userDTO.getPhoneNumber():user.getPhoneNumber());
-        user.setLastUpdateTime(LocalDateTime.parse(LocalDateTime.now().format(DATETIMEFORMATTER),DATETIMEFORMATTER));
+        if(userDTO.getProfilepic()!=null && userDTO.getProfilepic().length > 0) {
+        	user.setProfilepic(userDTO.getProfilepic());
+        }else {
+        	user.setProfilepic(user.getProfilepic());
+        	user.setUserFirstName(validate(userDTO.getUserFirstName())?userDTO.getUserFirstName():user.getUserFirstName());
+            user.setUserLastName(userDTO.getUserLastName());
+            user.setUserEmail(validate(userDTO.getUserEmail())?userDTO.getUserEmail():user.getUserEmail());
+            user.setRoles((userDTO.getRoles()!=null && !userDTO.getRoles().isEmpty())?userDTO.getRoles():user.getRoles());
+            user.setUserPassword(validate(userDTO.getUserPassword())?userDTO.getUserPassword():user.getUserPassword());
+            user.setPhoneNumber(userDTO.getPhoneNumber()!=null?userDTO.getPhoneNumber():user.getPhoneNumber());
+            user.setLastUpdateTime(LocalDateTime.parse(LocalDateTime.now().format(DATETIMEFORMATTER),DATETIMEFORMATTER));
+        }
         userRepository.save(user);
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_UPDATED+userId;
+        return new SuccessResponse(userId,ShopEasyConstants.RECORD_SUCCESSFULLY_UPDATED+userId);
+    }
+    
+    static boolean validate(String val){
+    	return val != null && !val.isBlank() && !val.isEmpty();
     }
 
     @Override
-    public String deleteUser(String userId) throws ShopEasyException {
+    public SuccessResponse deleteUser(String userId) throws ShopEasyException {
         Optional<User> optional=userRepository.findById(userId);
         User user=optional.orElseThrow(()->new ShopEasyException(ShopEasyConstants.NO_RECORDS_FOUND_FOR_GIVEN_USER_ID+userId,HttpStatus.NOT_FOUND));
         UserDTO userDTO=new UserDTO();
         userDTO.setUserId(user.getUserId());
         userRepository.deleteById(user.getUserId());
-        return ShopEasyConstants.RECORD_SUCCESSFULLY_DELETED+userId;
+        return new SuccessResponse(userId,ShopEasyConstants.RECORD_SUCCESSFULLY_DELETED);
     }
 }

@@ -7,6 +7,7 @@ import com.startcoding0to1.shopeasybackend.constants.ShopEasyConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.startcoding0to1.shopeasybackend.exception.ShopEasyException;
@@ -22,6 +24,7 @@ import com.startcoding0to1.shopeasybackend.service.ProductsService;
 
 @RestController
 @RequestMapping(value = "/startcoding0to1/shopEasy")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class ProductsController {
 
     @Autowired
@@ -35,9 +38,11 @@ public class ProductsController {
      * @author Mahammad Khairuddin
      */
     @GetMapping(value = "/products")
-    public ResponseEntity<List<ProductDTO>> getAllProducts() throws ShopEasyException {
-        List<ProductDTO> products;
-        products = productsService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProducts(@RequestParam(name="category",defaultValue = "all") String category) throws ShopEasyException {
+    	if(category==null || category.trim().isEmpty()){
+            throw new ShopEasyException(ShopEasyConstants.RESOURCE_IS_EMPTY,HttpStatus.BAD_REQUEST);
+        }
+    	List<ProductDTO> products = productsService.getAllProducts(category);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

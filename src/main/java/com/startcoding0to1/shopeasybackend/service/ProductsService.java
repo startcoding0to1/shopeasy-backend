@@ -19,7 +19,7 @@ public interface ProductsService {
      * @return A list of ProductsDTO representing all products.
      * @throws ShopEasyException if an error occurs while retrieving products.
      */
-    public List<ProductDTO> getAllProducts() throws ShopEasyException;
+    public List<ProductDTO> getAllProducts(String category) throws ShopEasyException;
     
     /**
      * Retrieves a product by its ID.
@@ -59,4 +59,5 @@ public interface ProductsService {
     public String deleteProduct(String prodId) throws ShopEasyException;
 
     public Set<ProductDTO> getAllProductsOfGivenSeller(Integer sellerId) throws ShopEasyException;
+
 }
